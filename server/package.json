@@ -1,0 +1,30 @@
+{
+  "name": "survivor-game",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Lifters-LA/Survivor-Game#readme",
+  "bugs": {
+    "url": "https://github.com/Lifters-LA/Survivor-Game/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lifters-LA/Survivor-Game.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "nodemon": "^3.1.14",
+    "pg": "^8.22.0",
+    "uuid": "^14.0.1"
+  }
+}
