@@ -38,7 +38,8 @@ export class MainScene extends Scene {
     this.player = new Player(this, 300, 450, "w_knight001");
     this.player.setCollideWorldBounds(true);
     this.player.setBounce(0.2);
-    this.player.body.setGravityY(2000);
+    this.player.body.setGravityY(9000);
+    this.player.body.setMaxVelocityY(600);
     this.player.setScale(3);
     this.physics.add.collider(this.player, platform);
     ///////////////////////////////TEST PLAYER
@@ -50,13 +51,15 @@ export class MainScene extends Scene {
       mele: Phaser.Input.Keyboard.KeyCodes.SPACE,
       mele2: Phaser.Input.Keyboard.KeyCodes.C,
     });
-
     /////////////////////////////////TEST ENEMY
     this.enemy = new Enemy(this, 500, 450, "br_zombie000", this.player);
     this.enemy.setScale(3);
-    this.enemy.setBounce(1);
+    this.enemy.setBounce(0.2);
+    this.player.setCollideWorldBounds(true);
     this.physics.add.collider(this.enemy, platform);
-    //this.physics.add.collider(this.enemy, this.player);
+    this.physics.add.collider(this.enemy, this.player);
+    this.player.body.setGravityY(9000);
+    this.enemy.body.setMaxVelocityY(600);
     /////////////////////////////////
   }
   update() {
