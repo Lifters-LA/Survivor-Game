@@ -1,0 +1,84 @@
+{
+    "anims": [
+        {
+            "key": "walk_side",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "player",
+                    "frame": "player008"
+                },
+                {
+                    "key": "player",
+                    "frame": "player009"
+                },
+                {
+                    "key": "player",
+                    "frame": "player010"
+                },
+                {
+                    "key": "player",
+                    "frame": "player011"
+                },
+                {
+                    "key": "player",
+                    "frame": "player012"
+                },
+                {
+                    "key": "player",
+                    "frame": "player013"
+                }
+            ]
+        },
+        {
+            "key": "idle_side",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "player",
+                    "frame": "player003"
+                },
+                {
+                    "key": "player",
+                    "frame": "player004"
+                },
+                {
+                    "key": "player",
+                    "frame": "player005"
+                },
+                {
+                    "key": "player",
+                    "frame": "player006"
+                },
+                {
+                    "key": "player",
+                    "frame": "player007"
+                }
+            ]
+        },
+        {
+            "key": "attack_side",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "player",
+                    "frame": "player000"
+                },
+                {
+                    "key": "player",
+                    "frame": "player001"
+                },
+                {
+                    "key": "player",
+                    "frame": "player002"
+                }
+            ]
+        }
+    ]
+}

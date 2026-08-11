@@ -1,0 +1,232 @@
+{
+    "anims": [
+        {
+            "key": "br_zombie_bite",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie022"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie023"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie024"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie025"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie026"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie027"
+                }
+            ]
+        },
+        {
+            "key": "br_zombie_attack",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie015"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie016"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie017"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie018"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie019"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie020"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie021"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie022"
+                }
+            ]
+        },
+        {
+            "key": "br_zombie_walk",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie007"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie008"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie009"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie010"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie011"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie012"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie013"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie014"
+                }
+            ]
+        },
+        {
+            "key": "br_zombie_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie000"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie001"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie002"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie003"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie004"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie005"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie006"
+                }
+            ]
+        },
+        {
+            "key": "br_zombie_death",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie037"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie038"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie039"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie040"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie041"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie042"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie043"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie044"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie045"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie046"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie047"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie048"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie049"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie050"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie051"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie052"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie053"
+                },
+                {
+                    "key": "brzombie",
+                    "frame": "br_zombie054"
+                }
+            ]
+        }
+    ]
+}

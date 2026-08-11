@@ -1,0 +1,1035 @@
+{
+    "frames": [
+        {
+            "filename": "br_zombie000",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 1,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie001",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 66,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie002",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 1,
+                "y": 66
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie003",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 66,
+                "y": 66
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie004",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 131,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie005",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 131,
+                "y": 66
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie006",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 1,
+                "y": 131
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie007",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 66,
+                "y": 131
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie008",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 131,
+                "y": 131
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie009",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 196,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie010",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 196,
+                "y": 66
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie011",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 196,
+                "y": 131
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie012",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 1,
+                "y": 196
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie013",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 66,
+                "y": 196
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie014",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 131,
+                "y": 196
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie015",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 196,
+                "y": 196
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie016",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 261,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie017",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 261,
+                "y": 66
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie018",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 261,
+                "y": 131
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie019",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 261,
+                "y": 196
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie020",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 1,
+                "y": 261
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie021",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 66,
+                "y": 261
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie022",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 131,
+                "y": 261
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie023",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 196,
+                "y": 261
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie024",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 261,
+                "y": 261
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie025",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 326,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie026",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 326,
+                "y": 66
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie027",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 326,
+                "y": 131
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie028",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 326,
+                "y": 196
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie029",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 326,
+                "y": 261
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie030",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 1,
+                "y": 326
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie031",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 66,
+                "y": 326
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie032",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 131,
+                "y": 326
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie033",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 196,
+                "y": 326
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie034",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 261,
+                "y": 326
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie035",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 326,
+                "y": 326
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie036",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 391,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie037",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 391,
+                "y": 66
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie038",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 391,
+                "y": 131
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie039",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 391,
+                "y": 196
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie040",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 391,
+                "y": 261
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie041",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 391,
+                "y": 326
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie042",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 1,
+                "y": 391
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie043",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 66,
+                "y": 391
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie044",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 131,
+                "y": 391
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie045",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 196,
+                "y": 391
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie046",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 261,
+                "y": 391
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie047",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 326,
+                "y": 391
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie048",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 391,
+                "y": 391
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie049",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 456,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie050",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 456,
+                "y": 66
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie051",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 456,
+                "y": 131
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie052",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 456,
+                "y": 196
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie053",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 456,
+                "y": 261
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie054",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 456,
+                "y": 326
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie055",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 456,
+                "y": 391
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie056",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 1,
+                "y": 456
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie057",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 66,
+                "y": 456
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie058",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 131,
+                "y": 456
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie059",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 196,
+                "y": 456
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie060",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 261,
+                "y": 456
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie061",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 326,
+                "y": 456
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie062",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 391,
+                "y": 456
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie063",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 456,
+                "y": 456
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie064",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 521,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie065",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 521,
+                "y": 66
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie066",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 521,
+                "y": 131
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie067",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 521,
+                "y": 196
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie068",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 521,
+                "y": 261
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie069",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 521,
+                "y": 326
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie070",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 521,
+                "y": 391
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie071",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 521,
+                "y": 456
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie072",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 1,
+                "y": 521
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie073",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 66,
+                "y": 521
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie074",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 131,
+                "y": 521
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie075",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 196,
+                "y": 521
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie076",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 261,
+                "y": 521
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie077",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 326,
+                "y": 521
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "br_zombie078",
+            "frame": {
+                "w": 64,
+                "h": 64,
+                "x": 391,
+                "y": 521
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Gamma V2",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}
