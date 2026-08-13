@@ -4,23 +4,31 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, texture);
     scene.add.existing(this);
     scene.physics.add.existing(this);
-    this.setCollideWorldBounds(true);
-    this.setBounce(0.2);
-    scene.physics.add.existing(this);
     this.player = player; //<----
+    this.maxHealth = 3;
+    this.health = this.maxHealth;
+
+    this.hitBySword = () => {
+      this.health -= 1;
+      if (this.health <= 0) {
+        console.log("dead!!!");
+      }
+    };
   }
 
   update() {
-    ///////////////////////////////ZOMBIE MOVEMENT DATA
+    ///////////////////////////////ZOMBIE MOVEMENT/HEALTH DATA
     //Set speed and calculate range between the zombie and it's prey!
     this.speed = 20;
+    this.maximumHeight = 350;
+    this.minimumHeight = 450;
     let aRange = Phaser.Math.Distance.Between(
       this.player.x,
       this.player.y,
       this.x,
       this.y,
     );
-    console.log(aRange);
+    //console.log(aRange);
     ///////////////////////////////ZOMBIE APPROACHES PLAYER
 
     if (aRange > 105) {
@@ -33,23 +41,26 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.anims.play("br_zombie_walk", true).setFlipX(false);
       }
     }
+
+    //This keeps the the ground based enemy from following the player vertically
+    if (this.y >= this.maximumHeight) {
+      this.setVelocityY(0);
+      this.y = this.minimumHeight;
+    }
     ///////////////////////////////TEST ATTACK
 
     //console.log(aRange);
-    if (aRange < 110) {
-      this.setVelocityY(0);
+    if (aRange < 115) {
+      //this.setVelocityX(0);
       this.anims.play("br_zombie_attack", true);
       // this.anims.play("br_zombie_attack", false);
     }
-    ///////////////////////////////
 
-    //I am attempting to limit zombie jump height
-    const maximumHeight = 400;
-    const minimumHeight = 550;
-    if (this.y < maximumHeight) {
-      this.y = maximumHeight;
-      if (this.body.velocity.y < 0) this.setVelocityY(0);
-      this.setVelocityY(0);
+    if (aRange < 125 && this.player.inputKeys.mele.isDown) {
+      //console.log("HIT!!!");
+      this.hitBySword();
     }
+
+    ///////////////////////////////
   }
 }

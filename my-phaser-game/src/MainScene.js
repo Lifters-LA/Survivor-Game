@@ -8,10 +8,10 @@ export class MainScene extends Scene {
   }
   //Load images
   preload() {
+    this.load.image("ground", "./src/assets/testplatform.png");
     this.load.image("player", "./src/assets/wknight.png");
     this.load.image("enemy", "./src/assets/brzombie.png");
     this.load.image("sky", "./src/assets/sky.png");
-    this.load.image("ground", "./src/assets/testplatform.png");
     this.load.atlas(
       "wknight",
       "./src/assets/wknight.png",
@@ -29,17 +29,15 @@ export class MainScene extends Scene {
   create() {
     ///////////////////////////////TEST Terrain
     this.add.image(400, 300, "sky");
-    let platform = this.physics.add.staticGroup();
+    const platform = this.physics.add.staticGroup();
     platform.create(400, 500, "ground").setScale(2).refreshBody();
-    platform.create(700, 350, "ground");
     ///////////////////////////////TEST Terrain
 
-    ///////////////////////////////TEST PLAYER
+    ///////////////////////////////TEST PLAYER <--These values added to player class later
     this.player = new Player(this, 300, 450, "w_knight001");
     this.player.setCollideWorldBounds(true);
+    this.player.body.setGravityY(1000);
     this.player.setBounce(0.2);
-    this.player.body.setGravityY(9000);
-    this.player.body.setMaxVelocityY(600);
     this.player.setScale(3);
     this.physics.add.collider(this.player, platform);
     ///////////////////////////////TEST PLAYER
@@ -51,19 +49,34 @@ export class MainScene extends Scene {
       mele: Phaser.Input.Keyboard.KeyCodes.SPACE,
       mele2: Phaser.Input.Keyboard.KeyCodes.C,
     });
-    /////////////////////////////////TEST ENEMY
+    /////////////////////////////////TEST ENEMY <--These values added to enemy class later
     this.enemy = new Enemy(this, 500, 450, "br_zombie000", this.player);
-    this.enemy.setScale(3);
+    this.enemy.setCollideWorldBounds(true);
+    this.enemy.body.setGravityY(500);
     this.enemy.setBounce(0.2);
-    this.player.setCollideWorldBounds(true);
+    this.enemy.setScale(3);
+    // this.physics.add.collider(this.enemy, platform);
+    //this.physics.add.collider(this.enemy, this.player);
+    /////////////////////////////////
+
+    this.enemy2 = new Enemy(this, 200, 450, "br_zombie000", this.player);
+    this.enemy2.setCollideWorldBounds(true);
+    this.enemy2.body.setGravityY(500);
+    this.enemy2.setBounce(0.2);
+    this.enemy2.setScale(3);
+    this.physics.add.collider(this.enemy2, platform);
+    this.physics.add.collider(this.enemy2, this.player);
+
+    /////////////////////////////////Colliders
     this.physics.add.collider(this.enemy, platform);
     this.physics.add.collider(this.enemy, this.player);
-    this.player.body.setGravityY(9000);
-    this.enemy.body.setMaxVelocityY(600);
-    /////////////////////////////////
+    this.physics.add.collider(this.enemy2, this.player);
+    this.physics.add.collider(this.enemy2, this.player);
+    this.physics.add.collider(this.enemy, this.enemy2);
   }
   update() {
     this.player.update();
     this.enemy.update();
+    this.enemy2.update();
   }
 }

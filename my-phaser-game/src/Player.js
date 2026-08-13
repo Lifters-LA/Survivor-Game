@@ -15,7 +15,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   update() {
     this.speed = 200;
     let direction = null;
-    this.maximumHealth = 100;
+    this.maximumHealth = 10;
     this.health = this.maximumHealth;
     //Need to add functionality to walk and slash at the same time
     if (this.inputKeys.left.isDown) {
@@ -31,7 +31,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       charAnimation.setFlipX(true);
       ////////////////////////////////////
     } else if (this.inputKeys.up.isDown) {
-      this.setVelocityY(-this.speed);
+      this.setVelocityY(-500);
       const charAnimation = this.anims.play("w_knight_jump", true);
       ////////////////////////////////////
     } else if (this.inputKeys.down.isDown) {

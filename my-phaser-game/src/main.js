@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import { MainScene } from "./MainScene.js";
 const config = {
   type: Phaser.AUTO,
-  width: 800,
+  width: 810,
   height: 600,
   physics: {
     default: "arcade",
