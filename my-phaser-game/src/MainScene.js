@@ -49,6 +49,7 @@ export class MainScene extends Scene {
       mele: Phaser.Input.Keyboard.KeyCodes.SPACE,
       mele2: Phaser.Input.Keyboard.KeyCodes.C,
     });
+
     /////////////////////////////////TEST ENEMY <--These values added to enemy class later
     this.enemy = new Enemy(this, 500, 450, "br_zombie000", this.player);
     this.enemy.setCollideWorldBounds(true);
