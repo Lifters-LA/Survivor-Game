@@ -28,6 +28,8 @@ export class MainScene extends Scene {
   }
 
   create() {
+    ///////////////////////////////CREATE TIMER
+    //timer = this.time.addEvent({ delay: 10000, callback: this.endOfRound, callbackScope: this }); <---Timer
     ///////////////////////////////TEST Terrain
     this.add.image(400, 300, "sky");
     const platform = this.physics.add.staticGroup();
@@ -60,12 +62,17 @@ export class MainScene extends Scene {
     this.enemy.setScale(3);
     this.physics.add.collider(this.enemy, platform);
     //this.physics.add.collider(this.enemy, this.player);
+    //Damage Collider
     this.physics.add.collider(
       this.enemy,
       this.player,
       null,
       (player, enemy2) => {
         this.player.playerHealth = this.player.playerHealth -= 50;
+        this.player.setTint(0xff0000);
+        this.time.delayedCall(100, () => {
+          this.player.clearTint();
+        });
         console.log(this.player.playerHealth);
         if (this.player.playerHealth < 1) {
           this.player.destroy();
@@ -88,20 +95,6 @@ export class MainScene extends Scene {
     // this.enemy3.setScale(3);
     // this.physics.add.collider(this.enemy3, platform);
     // this.physics.add.collider(this.enemy3, this.player);
-
-    /////////////////////////////////Colliders
-    /* 
-    this.physics.add.collider(
-      this.enemy,
-      this.enemy2,
-      null,
-      (player, enemy2) => {
-        console.log(this.player.maximumHealth);
-      },
-    );
-    */
-    //this.physics.add.collider(this.enemy3, this.player);
-    /////////////////////////////////TEST ENEMY GROUP
   }
   update() {
     this.player.update();
