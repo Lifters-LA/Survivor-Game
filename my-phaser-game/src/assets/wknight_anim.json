@@ -1,280 +1,280 @@
 {
-    "anims": [
+  "anims": [
+    {
+      "key": "w_knight_jump",
+      "type": "frames",
+      "repeat": -1,
+      "frameRate": 12,
+      "frames": [
         {
-            "key": "w_knight_jump",
-            "type": "frames",
-            "repeat": -1,
-            "frameRate": 12,
-            "frames": [
-                {
-                    "key": "wknight",
-                    "frame": "w_knight015"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight016"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight017"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight018"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight019"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight020"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight021"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight022"
-                }
-            ]
+          "key": "wknight",
+          "frame": "w_knight015"
         },
         {
-            "key": "w_knight_stab",
-            "type": "frames",
-            "repeat": -1,
-            "frameRate": 12,
-            "frames": [
-                {
-                    "key": "wknight",
-                    "frame": "w_knight042"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight043"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight044"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight045"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight046"
-                }
-            ]
+          "key": "wknight",
+          "frame": "w_knight016"
         },
         {
-            "key": "w_knight_death",
-            "type": "frames",
-            "repeat": -1,
-            "frameRate": 12,
-            "frames": [
-                {
-                    "key": "wknight",
-                    "frame": "w_knight054"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight055"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight056"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight057"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight058"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight059"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight060"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight061"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight062"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight063"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight064"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight065"
-                }
-            ]
+          "key": "wknight",
+          "frame": "w_knight017"
         },
         {
-            "key": "w_knight_shield_blow",
-            "type": "frames",
-            "repeat": -1,
-            "frameRate": 12,
-            "frames": [
-                {
-                    "key": "wknight",
-                    "frame": "w_knight032"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight033"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight034"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight035"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight036"
-                }
-            ]
+          "key": "wknight",
+          "frame": "w_knight018"
         },
         {
-            "key": "w_knight_shield",
-            "type": "frames",
-            "repeat": -1,
-            "frameRate": 12,
-            "frames": [
-                {
-                    "key": "wknight",
-                    "frame": "w_knight027"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight028"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight029"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight030"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight031"
-                }
-            ]
+          "key": "wknight",
+          "frame": "w_knight019"
         },
         {
-            "key": "w_knight_slash",
-            "type": "frames",
-            "repeat": -1,
-            "frameRate": 12,
-            "frames": [
-                {
-                    "key": "wknight",
-                    "frame": "w_knight009"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight010"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight011"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight012"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight013"
-                }
-            ]
+          "key": "wknight",
+          "frame": "w_knight020"
         },
         {
-            "key": "w_knight_idle",
-            "type": "frames",
-            "repeat": -1,
-            "frameRate": 12,
-            "frames": [
-                {
-                    "key": "wknight",
-                    "frame": "w_knight022"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight023"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight024"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight025"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight026"
-                }
-            ]
+          "key": "wknight",
+          "frame": "w_knight021"
         },
         {
-            "key": "w_knight_walk",
-            "type": "frames",
-            "repeat": -1,
-            "frameRate": 12,
-            "frames": [
-                {
-                    "key": "wknight",
-                    "frame": "w_knight000"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight001"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight002"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight003"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight004"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight005"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight006"
-                },
-                {
-                    "key": "wknight",
-                    "frame": "w_knight007"
-                }
-            ]
+          "key": "wknight",
+          "frame": "w_knight022"
         }
-    ]
+      ]
+    },
+    {
+      "key": "w_knight_stab",
+      "type": "frames",
+      "repeat": -1,
+      "frameRate": 12,
+      "frames": [
+        {
+          "key": "wknight",
+          "frame": "w_knight042"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight043"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight044"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight045"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight046"
+        }
+      ]
+    },
+    {
+      "key": "w_knight_death",
+      "type": "frames",
+      "repeat": -1,
+      "frameRate": 12,
+      "frames": [
+        {
+          "key": "wknight",
+          "frame": "w_knight054"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight055"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight056"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight057"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight058"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight059"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight060"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight061"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight062"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight063"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight064"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight065"
+        }
+      ]
+    },
+    {
+      "key": "w_knight_shield_blow",
+      "type": "frames",
+      "repeat": -1,
+      "frameRate": 12,
+      "frames": [
+        {
+          "key": "wknight",
+          "frame": "w_knight032"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight033"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight034"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight035"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight036"
+        }
+      ]
+    },
+    {
+      "key": "w_knight_shield",
+      "type": "frames",
+      "repeat": -1,
+      "frameRate": 12,
+      "frames": [
+        {
+          "key": "wknight",
+          "frame": "w_knight027"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight028"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight029"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight030"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight031"
+        }
+      ]
+    },
+    {
+      "key": "w_knight_slash",
+      "type": "frames",
+      "repeat": -1,
+      "frameRate": 12,
+      "frames": [
+        {
+          "key": "wknight",
+          "frame": "w_knight009"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight010"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight011"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight012"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight013"
+        }
+      ]
+    },
+    {
+      "key": "w_knight_idle",
+      "type": "frames",
+      "repeat": -1,
+      "frameRate": 12,
+      "frames": [
+        {
+          "key": "wknight",
+          "frame": "w_knight022"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight023"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight024"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight025"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight026"
+        }
+      ]
+    },
+    {
+      "key": "w_knight_walk",
+      "type": "frames",
+      "repeat": -1,
+      "frameRate": 12,
+      "frames": [
+        {
+          "key": "wknight",
+          "frame": "w_knight000"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight001"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight002"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight003"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight004"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight005"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight006"
+        },
+        {
+          "key": "wknight",
+          "frame": "w_knight007"
+        }
+      ]
+    }
+  ]
 }
