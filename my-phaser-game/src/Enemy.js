@@ -9,6 +9,12 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.health = this.maxHealth;
     this.hitBySword = () => {
       this.health -= 1;
+
+      this.setTint(0xff0000);
+      this.scene.time.delayedCall(100, () => {
+        this.clearTint();
+      });
+
       console.log(this.health);
     };
   }
@@ -16,7 +22,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   update() {
     if (this.health > 0) {
       ///////////////////////////////ZOMBIE MOVEMENT/HEALTH DATA
-      //Set speed and calculate range between the zombie and it's prey!
+      //Set speed and calculate range between the zombie and it's prey! <---Adjust this for the map!!!
       this.speed = 20;
       this.maximumHeight = 350;
       this.minimumHeight = 450;

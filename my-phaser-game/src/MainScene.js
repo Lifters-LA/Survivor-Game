@@ -29,6 +29,7 @@ export class MainScene extends Scene {
 
   create() {
     ///////////////////////////////CREATE TIMER
+    //Need to count Zombies
     //timer = this.time.addEvent({ delay: 10000, callback: this.endOfRound, callbackScope: this }); <---Timer
     ///////////////////////////////TEST Terrain
     this.add.image(400, 300, "sky");
@@ -60,9 +61,10 @@ export class MainScene extends Scene {
     this.enemy.body.setGravityY(500);
     this.enemy.setBounce(0.2);
     this.enemy.setScale(3);
-    this.physics.add.collider(this.enemy, platform);
+    this.player.body.onCollide = true;
+    //this.physics.add.collider(this.enemy, platform);
     //this.physics.add.collider(this.enemy, this.player);
-    //Damage Collider
+    //Damage Collider******************************
     this.physics.add.collider(
       this.enemy,
       this.player,
@@ -75,7 +77,9 @@ export class MainScene extends Scene {
         });
         console.log(this.player.playerHealth);
         if (this.player.playerHealth < 1) {
+          console.log("DEAD!!!");
           this.player.destroy();
+          //Call game over!
         }
       },
     );
@@ -85,7 +89,7 @@ export class MainScene extends Scene {
     this.enemy2.body.setGravityY(500);
     this.enemy2.setBounce(0.2);
     this.enemy2.setScale(3);
-    this.physics.add.collider(this.enemy2, platform);
+    //this.physics.add.collider(this.enemy2, platform);
     this.physics.add.collider(this.enemy2, this.player);
 
     //this.enemy3 = new Enemy(this, 550, 450, "br_zombie000", this.player);
