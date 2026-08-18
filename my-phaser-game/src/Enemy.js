@@ -7,6 +7,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.player = player; //<----
     this.maxHealth = 3;
     this.health = this.maxHealth;
+    this.patrol = false;
     this.hitBySword = () => {
       this.health -= 1;
 
