@@ -56,10 +56,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
       //console.log(aRange);
       if (aRange < 115) {
-        //this.setVelocityX(0);
-        console.log(aRange);
         this.anims.play("br_zombie_attack", true);
-        // this.anims.play("br_zombie_attack", false);
       }
 
       if (
@@ -67,8 +64,13 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         (Phaser.Input.Keyboard.JustDown(this.player.inputKeys.mele) ||
           Phaser.Input.Keyboard.JustDown(this.player.inputKeys.mele2))
       ) {
-        // console.log("HIT!!!");
-        this.hitBySword();
+        if (
+          (this.player.direction == "left" && this.x < this.player.x) ||
+          (this.player.direction == "right" && this.x > this.player.x)
+        ) {
+          console.log("HIT!!!");
+          this.hitBySword();
+        }
       }
     } else if (this.health < 1) {
       this.destroy();

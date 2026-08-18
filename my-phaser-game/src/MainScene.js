@@ -39,7 +39,6 @@ export class MainScene extends Scene {
 
     ///////////////////////////////TEST PLAYER <--These values added to player class later
     this.player = new Player(this, 300, 450, "w_knight001", this.Enemy);
-    //this.physics.add.existing(this.player);
     this.player.setCollideWorldBounds(true);
     this.player.body.setSize(40, 42);
     this.player.body.setOffset(14, 16);
@@ -59,7 +58,6 @@ export class MainScene extends Scene {
     });
 
     /////////////////////////////////TEST ENEMY <--These values added to enemy class later
-
     this.enemy = new Enemy(this, 500, 450, "br_zombie000", this.player);
     this.enemy.setCollideWorldBounds(true);
     this.enemy.body.setGravityY(500);
