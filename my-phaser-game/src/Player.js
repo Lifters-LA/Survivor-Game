@@ -8,6 +8,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.enemy = this.enemy;
     this.maximumHealth = 5000;
     this.playerHealth = this.maximumHealth;
+    this.maxShieldHealth = 2000;
+    this.shieldHealth = this.maximumHealth;
   }
 
   update() {
@@ -33,17 +35,14 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         const charAnimation = this.anims.play("w_knight_jump", true);
         ////////////////////////////////////
       } else if (this.inputKeys.down.isDown) {
-        //athis.setVelocity(0, 0);
         const charAnimation = this.anims.play("w_knight_shield", true);
         ////////////////////////////////////
       } else if (this.inputKeys.mele.isDown) {
-        //this.setVelocity(0, 0);
         const charAnimation = this.anims.play("w_knight_slash", true);
       } else if (this.inputKeys.mele2.isDown) {
         this.setVelocity(0, 0);
         const charAnimation = this.anims.play("w_knight_stab", true);
       } else {
-        //this.setVelocity(0, 0);
         const charAnimation = this.anims.play("w_knight_idle", true);
         ////////////////////////////////////
       }
