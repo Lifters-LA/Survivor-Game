@@ -34,13 +34,15 @@ export class MainScene extends Scene {
     ///////////////////////////////TEST Terrain
     this.add.image(400, 300, "sky");
     const platform = this.physics.add.staticGroup();
-    platform.create(400, 500, "ground").setScale(2).refreshBody();
+    platform.create(400, 580, "ground").setScale(2).refreshBody();
     ///////////////////////////////TEST Terrain
 
     ///////////////////////////////TEST PLAYER <--These values added to player class later
     this.player = new Player(this, 300, 450, "w_knight001", this.Enemy);
+    //this.physics.add.existing(this.player);
     this.player.setCollideWorldBounds(true);
-    this.player.body.setGravityY(9000);
+    this.player.body.setSize(48, 42);
+    this.player.body.setOffset(10, 16);
     this.player.setBounce(0.2);
     this.player.setScale(3);
     this.player.body.onCollide = true;
@@ -56,6 +58,7 @@ export class MainScene extends Scene {
     });
 
     /////////////////////////////////TEST ENEMY <--These values added to enemy class later
+    /*
     this.enemy = new Enemy(this, 500, 450, "br_zombie000", this.player);
     this.enemy.setCollideWorldBounds(true);
     this.enemy.body.setGravityY(500);
@@ -75,9 +78,9 @@ export class MainScene extends Scene {
         this.time.delayedCall(100, () => {
           this.player.clearTint();
         });
-        console.log(this.player.playerHealth);
+        //console.log(this.player.playerHealth);
         if (this.player.playerHealth < 1) {
-          console.log("DEAD!!!");
+          // console.log("DEAD!!!");
           this.player.destroy();
           //Call game over!
         }
@@ -92,6 +95,8 @@ export class MainScene extends Scene {
     //this.physics.add.collider(this.enemy2, platform);
     this.physics.add.collider(this.enemy2, this.player);
 
+*/
+
     //this.enemy3 = new Enemy(this, 550, 450, "br_zombie000", this.player);
     //this.enemy3.setCollideWorldBounds(true);
     // this.enemy3.body.setGravityY(500);
@@ -102,8 +107,8 @@ export class MainScene extends Scene {
   }
   update() {
     this.player.update();
-    this.enemy.update();
-    this.enemy2.update();
+    // this.enemy.update();
+    // this.enemy2.update();
 
     //this.enemy3.update();
   }

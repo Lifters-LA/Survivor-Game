@@ -47,6 +47,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       }
 
       //This keeps the the ground based enemy from following the player vertically
+      //Remove when using an actual map
       if (this.y >= this.maximumHeight) {
         this.setVelocityY(0);
         this.y = this.minimumHeight;
@@ -65,7 +66,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         (Phaser.Input.Keyboard.JustDown(this.player.inputKeys.mele) ||
           Phaser.Input.Keyboard.JustDown(this.player.inputKeys.mele2))
       ) {
-        console.log("HIT!!!");
+        // console.log("HIT!!!");
         this.hitBySword();
       }
     } else if (this.health < 1) {
