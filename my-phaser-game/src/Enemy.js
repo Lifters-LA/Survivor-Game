@@ -23,7 +23,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.health > 0) {
       ///////////////////////////////ZOMBIE MOVEMENT/HEALTH DATA
       //Set speed and calculate range between the zombie and it's prey! <---Adjust this for the map!!!
-      this.speed = 20;
+      this.speed = 10;
       this.maximumHeight = 350;
       this.minimumHeight = 450;
       let aRange = Phaser.Math.Distance.Between(
@@ -57,6 +57,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       //console.log(aRange);
       if (aRange < 115) {
         //this.setVelocityX(0);
+        console.log(aRange);
         this.anims.play("br_zombie_attack", true);
         // this.anims.play("br_zombie_attack", false);
       }

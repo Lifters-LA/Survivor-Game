@@ -41,12 +41,13 @@ export class MainScene extends Scene {
     this.player = new Player(this, 300, 450, "w_knight001", this.Enemy);
     //this.physics.add.existing(this.player);
     this.player.setCollideWorldBounds(true);
-    this.player.body.setSize(42, 42);
+    this.player.body.setSize(40, 42);
     this.player.body.setOffset(14, 16);
-    this.player.setBounce(0.2);
+    this.player.setBounceY(0.5);
     this.player.setScale(3);
     this.player.body.onCollide = true;
     this.physics.add.collider(this.player, platform);
+    this.physics.add.collider(this.player, this.enemy);
     ///////////////////////////////TEST PLAYER
     this.player.inputKeys = this.input.keyboard.addKeys({
       up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -62,13 +63,13 @@ export class MainScene extends Scene {
     this.enemy = new Enemy(this, 500, 450, "br_zombie000", this.player);
     this.enemy.setCollideWorldBounds(true);
     this.enemy.body.setGravityY(500);
-    this.enemy.setBounce(0.2);
+    this.enemy.setBounce(1, 1);
     this.enemy.setScale(3);
     this.enemy.body.onCollide = true;
-    this.enemy.body.setSize(28, 42);
-    this.enemy.body.setOffset(16, 22);
+    this.enemy.body.setSize(22, 42);
+    this.enemy.body.setOffset(18, 22);
     //Damage Collider******************************
-    this.physics.add.collider(
+    this.physics.add.overlap(
       this.enemy,
       this.player,
       null,
@@ -78,22 +79,19 @@ export class MainScene extends Scene {
         this.time.delayedCall(100, () => {
           this.player.clearTint();
         });
-        //console.log(this.player.playerHealth);
         if (this.player.playerHealth < 1) {
-          // console.log("DEAD!!!");
           this.player.destroy();
-          //Call game over!
         }
       },
     );
 
-    this.enemy2 = new Enemy(this, 200, 450, "br_zombie000", this.player);
-    this.enemy2.setCollideWorldBounds(true);
-    this.enemy2.setBounce(0.2);
-    this.enemy2.setScale(3);
-    this.physics.add.collider(this.enemy2, this.player);
-    this.enemy2.body.setSize(32, 42);
-    this.enemy2.body.setOffset(10, 22);
+    //this.enemy2 = new Enemy(this, 200, 450, "br_zombie000", this.player);
+    //this.enemy2.setCollideWorldBounds(true);
+    //this.enemy2.setBounce(0.2);
+    //this.enemy2.setScale(3);
+    //this.physics.add.collider(this.enemy2, this.player);
+    //this.enemy2.body.setSize(32, 42);
+    //this.enemy2.body.setOffset(10, 22);
 
     //this.enemy3 = new Enemy(this, 550, 450, "br_zombie000", this.player);
     //this.enemy3.setCollideWorldBounds(true);
@@ -106,7 +104,7 @@ export class MainScene extends Scene {
   update() {
     this.player.update();
     this.enemy.update();
-    this.enemy2.update();
+    //this.enemy2.update();
 
     //this.enemy3.update();
   }
