@@ -1,21 +1,33 @@
 import Phaser from "phaser";
 import { MainScene } from "./MainScene.js";
+import { PvpScene } from "./pvpScene.js";
+import { LobbyScene } from "./lobbyScene.js";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:3000");
 const config = {
   type: Phaser.AUTO,
-  width: 810,
-  height: 600,
+
+  parent: "app",
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: "100%",
+    height: "100%",
+  },
+  dom: {
+    createContainer: true,
+  },
   physics: {
     default: "arcade",
     arcade: {
       gravity: { y: 0 }, // Pulls bodies down
-      debug: false,
+      debug: true,
     },
   },
-  scene: [MainScene],
-  scale: {
-    zoom: 1,
-  },
+  scene: [PvpScene, MainScene, LobbyScene],
 };
 
 const game = new Phaser.Game(config);
+game.socket = socket;
 //https://docs.phaser.io/phaser/concepts/physics/arcade
