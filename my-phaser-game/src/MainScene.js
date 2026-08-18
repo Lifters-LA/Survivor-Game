@@ -72,13 +72,24 @@ export class MainScene extends Scene {
       this.player,
       null,
       (player, enemy2) => {
-        this.player.playerHealth = this.player.playerHealth -= 50;
-        this.player.setTint(0xff0000);
-        this.time.delayedCall(100, () => {
-          this.player.clearTint();
-        });
-        if (this.player.playerHealth < 1) {
-          this.player.destroy();
+        if (this.player.inputKeys.down.isDown && this.player.shieldHealth > 1) {
+          this.player.shieldHealth = this.player.shieldHealth -= 100;
+          console.log(this.player.shieldHealth);
+          this.player.setTint(0x0000ff);
+          this.time.delayedCall(100, () => {
+            this.player.clearTint();
+          });
+        }
+        /////////////////////////////////////////////
+        else {
+          this.player.playerHealth = this.player.playerHealth -= 50;
+          this.player.setTint(0xff0000);
+          this.time.delayedCall(100, () => {
+            this.player.clearTint();
+          });
+          if (this.player.playerHealth < 1) {
+            this.player.destroy();
+          }
         }
       },
     );

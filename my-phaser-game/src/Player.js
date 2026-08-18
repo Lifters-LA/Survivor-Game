@@ -26,7 +26,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       } else if (this.inputKeys.right.isDown) {
         this.setVelocityX(this.speed);
         this.direction = "right";
-        console.log(this.direction);
         const charAnimation = this.anims.play("w_knight_walk", true);
         charAnimation.setFlipX(true);
         ////////////////////////////////////
@@ -36,6 +35,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         ////////////////////////////////////
       } else if (this.inputKeys.down.isDown) {
         const charAnimation = this.anims.play("w_knight_shield", true);
+        this.direction = "down";
         ////////////////////////////////////
       } else if (this.inputKeys.mele.isDown) {
         console.log(this.direction);
