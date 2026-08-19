@@ -37,7 +37,7 @@ export class MainScene extends Scene {
     platform.create(400, 580, "ground").setScale(2).refreshBody();
     ///////////////////////////////TEST Terrain
 
-    ///////////////////////////////TEST PLAYER <--These values added to player class later
+    ///////////////////////////////TEST PLAYER(START) <--These values added to player class later
     this.player = new Player(this, 300, 450, "w_knight001", this.Enemy);
     this.player.setCollideWorldBounds(true);
     this.player.body.setSize(40, 42);
@@ -47,7 +47,7 @@ export class MainScene extends Scene {
     this.player.body.onCollide = true;
     this.physics.add.collider(this.player, platform);
     this.physics.add.collider(this.player, this.enemy);
-    ///////////////////////////////TEST PLAYER
+
     this.player.inputKeys = this.input.keyboard.addKeys({
       up: Phaser.Input.Keyboard.KeyCodes.W,
       down: Phaser.Input.Keyboard.KeyCodes.S,
@@ -56,8 +56,9 @@ export class MainScene extends Scene {
       mele: Phaser.Input.Keyboard.KeyCodes.SPACE,
       mele2: Phaser.Input.Keyboard.KeyCodes.C,
     });
+    ///////////////////////////////TEST PLAYER(END)
 
-    /////////////////////////////////TEST ENEMY <--These values added to enemy class later
+    /////////////////////////////////TEST ENEMY(START) <--These values added to enemy class later
     this.enemy = new Enemy(this, 500, 450, "br_zombie000", this.player);
     this.enemy.setCollideWorldBounds(true);
     this.enemy.body.setGravityY(500);
@@ -79,9 +80,7 @@ export class MainScene extends Scene {
           this.time.delayedCall(100, () => {
             this.player.clearTint();
           });
-        }
-        /////////////////////////////////////////////
-        else {
+        } else {
           this.player.playerHealth = this.player.playerHealth -= 50;
           this.player.setTint(0xff0000);
           this.time.delayedCall(100, () => {
@@ -93,28 +92,10 @@ export class MainScene extends Scene {
         }
       },
     );
-
-    //this.enemy2 = new Enemy(this, 200, 450, "br_zombie000", this.player);
-    //this.enemy2.setCollideWorldBounds(true);
-    //this.enemy2.setBounce(0.2);
-    //this.enemy2.setScale(3);
-    //this.physics.add.collider(this.enemy2, this.player);
-    //this.enemy2.body.setSize(32, 42);
-    //this.enemy2.body.setOffset(10, 22);
-
-    //this.enemy3 = new Enemy(this, 550, 450, "br_zombie000", this.player);
-    //this.enemy3.setCollideWorldBounds(true);
-    // this.enemy3.body.setGravityY(500);
-    // this.enemy3.setBounce(0.2);
-    // this.enemy3.setScale(3);
-    // this.physics.add.collider(this.enemy3, platform);
-    // this.physics.add.collider(this.enemy3, this.player);
+    /////////////////////////////////TEST ENEMY(END)
   }
   update() {
     this.player.update();
     this.enemy.update();
-    //this.enemy2.update();
-
-    //this.enemy3.update();
   }
 }

@@ -33,10 +33,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.x,
         this.y,
       );
-      //console.log(aRange);
       ///////////////////////////////ZOMBIE APPROACHES PLAYER
-
-      if (aRange > 105) {
+      if (aRange > 105 && this.patrol == false) {
         this.scene.physics.moveToObject(this, this.player, this.speed);
 
         if (this.body.velocity.x > 0) {
@@ -55,7 +53,6 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       }
       ///////////////////////////////TEST ATTACK
 
-      //console.log(aRange);
       if (aRange < 115) {
         this.anims.play("br_zombie_attack", true);
       }
