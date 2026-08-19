@@ -4,9 +4,13 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, texture);
     scene.add.existing(this);
     scene.physics.add.existing(this);
+    this.body.setSize(this.width, this.height, true);
     this.enemy = this.enemy;
     this.maximumHealth = 5000;
     this.playerHealth = this.maximumHealth;
+    this.maxShieldHealth = 2000;
+    this.shieldHealth = this.maximumHealth;
+    this.direction = null;
   }
 
   update() {

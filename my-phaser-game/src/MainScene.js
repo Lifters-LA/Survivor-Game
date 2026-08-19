@@ -128,11 +128,9 @@ export class MainScene extends Scene {
     this.player = new Player(this, 300, 450, "w_knight001", this.Enemy);
 
     this.player.setCollideWorldBounds(true);
-
-    this.player.body.setGravityY(9000);
-
-    this.player.setBounce(0.2);
-
+    this.player.body.setSize(40, 42);
+    this.player.body.setOffset(14, 16);
+    this.player.setBounceY(0.5);
     this.player.setScale(3);
 
     this.player.body.onCollide = true;
@@ -148,46 +146,54 @@ export class MainScene extends Scene {
       mele2: Phaser.Input.Keyboard.KeyCodes.C,
     });
 
-    // ============================
-    // ENEMY 1
-    // ============================
+    ///////////////////////////////TEST PLAYER(END)
 
+    /////////////////////////////////TEST ENEMY(START) <--These values added to enemy class later
     this.enemy = new Enemy(this, 500, 450, "br_zombie000", this.player);
+    this.physics.add.collider(this.player, this.enemy);
 
     this.enemy.setCollideWorldBounds(true);
 
     this.enemy.body.setGravityY(500);
-
-    this.enemy.setBounce(0.2);
-
+    this.enemy.setBounce(1, 1);
     this.enemy.setScale(3);
-
-    // ============================
-    // PLAYER / ENEMY DAMAGE
-    // ============================
-
-    this.physics.add.collider(
+    this.enemy.body.onCollide = true;
+    this.enemy.body.setSize(22, 42);
+    this.enemy.body.setOffset(18, 22);
+    this.enemy.patrol = true; //<----Controls Patrol behavior - Set to true to start patrol behavior
+    //Damage Collider******************************
+    this.physics.add.overlap(
       this.enemy,
       this.player,
       null,
       (player, enemy2) => {
-        this.player.playerHealth -= 50;
-
-        this.player.setTint(0xff0000);
-
-        this.time.delayedCall(100, () => {
-          this.player.clearTint();
-        });
-
-        console.log(this.player.playerHealth);
-
-        if (this.player.playerHealth < 1) {
-          console.log("DEAD!!!");
-
-          this.player.destroy();
+        if (this.player.inputKeys.down.isDown && this.player.shieldHealth > 1) {
+          this.player.shieldHealth = this.player.shieldHealth -= 100;
+          console.log(this.player.shieldHealth);
+          this.player.setTint(0x0000ff);
+          this.time.delayedCall(100, () => {
+            this.player.clearTint();
+          });
+        } else {
+          this.player.playerHealth = this.player.playerHealth -= 50;
+          console.log(this.player.playerHealth); ///
+          this.player.setTint(0xff0000);
+          this.time.delayedCall(100, () => {
+            this.player.clearTint();
+          });
+          if (this.player.playerHealth < 1) {
+            this.player.destroy();
+          }
         }
       },
     );
+    //Patrol Behavior******************************
+    if (this.enemy.health > 0) {
+      if (this.enemy.patrol == true) {
+        this.enemy.setDirectControl();
+        this.enemy.setImmovable();
+      }
+    }
 
     // ============================
     // PLAYER MAP COLLISION
@@ -234,17 +240,9 @@ export class MainScene extends Scene {
     this.cameras.main.startFollow(this.player);
   }
 
+  //
   update() {
-    if (this.player?.active) {
-      this.player.update();
-    }
-
-    if (this.enemy?.active) {
-      this.enemy.update();
-    }
-
-    if (this.enemy2?.active) {
-      this.enemy2.update();
-    }
+    this.player.update();
+    this.enemy.update();
   }
 }

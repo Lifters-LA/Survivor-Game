@@ -7,6 +7,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.player = player; //<----
     this.maxHealth = 3;
     this.health = this.maxHealth;
+    this.patrol = true;
     this.hitBySword = () => {
       this.health -= 1;
 
@@ -23,7 +24,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.health > 0) {
       ///////////////////////////////ZOMBIE MOVEMENT/HEALTH DATA
       //Set speed and calculate range between the zombie and it's prey! <---Adjust this for the map!!!
-      this.speed = 20;
+      this.speed = 10;
       this.maximumHeight = 350;
       this.minimumHeight = 450;
       let aRange = Phaser.Math.Distance.Between(
@@ -32,10 +33,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.x,
         this.y,
       );
-      //console.log(aRange);
       ///////////////////////////////ZOMBIE APPROACHES PLAYER
-
-      if (aRange > 105) {
+      if (aRange > 105 && this.patrol == false) {
         this.scene.physics.moveToObject(this, this.player, this.speed);
 
         if (this.body.velocity.x > 0) {
@@ -47,17 +46,15 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       }
 
       //This keeps the the ground based enemy from following the player vertically
+      //Remove when using an actual map
       if (this.y >= this.maximumHeight) {
         this.setVelocityY(0);
         this.y = this.minimumHeight;
       }
       ///////////////////////////////TEST ATTACK
 
-      //console.log(aRange);
       if (aRange < 115) {
-        //this.setVelocityX(0);
         this.anims.play("br_zombie_attack", true);
-        // this.anims.play("br_zombie_attack", false);
       }
 
       if (
@@ -65,13 +62,44 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         (Phaser.Input.Keyboard.JustDown(this.player.inputKeys.mele) ||
           Phaser.Input.Keyboard.JustDown(this.player.inputKeys.mele2))
       ) {
-        console.log("HIT!!!");
-        this.hitBySword();
+        if (
+          (this.player.direction == "left" && this.x < this.player.x) ||
+          (this.player.direction == "right" && this.x > this.player.x)
+        ) {
+          console.log("HIT!!!");
+          this.hitBySword();
+        }
       }
+
+      ///////////////////////////////TEST PATROL
+      if (this.patrol == true) {
+        this.setDirectControl();
+        this.setImmovable();
+
+        this.scene.tweens.add({
+          targets: this.enemy,
+          x: 600,
+          duration: 2000,
+          ease: "sine.inout",
+          repeat: -1,
+          yoyo: true,
+        });
+        //Animation************************************
+        console.log(this.body.velocity.x);
+        if (this.body.velocity.x > 0) {
+          const patrolAnimation = this.anims
+            .play("br_zombie_walk", true)
+            .setFlipX(true);
+        }
+        if (this.body.velocity.x < 0) {
+          const patrolAnimation = this.anims
+            .play("br_zombie_walk", true)
+            .setFlipX(false);
+        }
+      }
+      ///////////////////////////////
     } else if (this.health < 1) {
       this.destroy();
     }
-
-    ///////////////////////////////
   }
 }

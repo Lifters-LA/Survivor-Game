@@ -21,7 +21,7 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 0 }, // Pulls bodies down
+      gravity: { x: 0, y: 225 }, // Pulls bodies down
       debug: true,
     },
   },
