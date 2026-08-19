@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { MainScene } from "./MainScene.js";
+import { PvPScene } from "./PvPScene.js";
 const config = {
   type: Phaser.AUTO,
   width: 810,
@@ -11,7 +12,7 @@ const config = {
       debug: true,
     },
   },
-  scene: [MainScene],
+  scene: [PvPScene, MainScene],
   scale: {
     zoom: 1,
   },
