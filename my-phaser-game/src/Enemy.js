@@ -88,6 +88,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         repeat: -1,
         yoyo: true,
       });
+
       //Animation************************************
       console.log(this.body.velocity.x);
       if (this.body.velocity.x > 0) {
