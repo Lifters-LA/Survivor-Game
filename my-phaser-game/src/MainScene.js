@@ -56,6 +56,7 @@ export class MainScene extends Scene {
       mele: Phaser.Input.Keyboard.KeyCodes.SPACE,
       mele2: Phaser.Input.Keyboard.KeyCodes.C,
     });
+
     ///////////////////////////////TEST PLAYER(END)
 
     /////////////////////////////////TEST ENEMY(START) <--These values added to enemy class later
@@ -67,6 +68,7 @@ export class MainScene extends Scene {
     this.enemy.body.onCollide = true;
     this.enemy.body.setSize(22, 42);
     this.enemy.body.setOffset(18, 22);
+    this.enemy.patrol = false; //<----Controls Patrol behavior - Set to true to start patrol behavior
     //Damage Collider******************************
     this.physics.add.overlap(
       this.enemy,
@@ -92,6 +94,22 @@ export class MainScene extends Scene {
         }
       },
     );
+    //Patrol Behavior******************************
+
+    if (this.enemy.patrol == true) {
+      this.enemy.setDirectControl();
+      this.enemy.setImmovable();
+
+      this.tweens.add({
+        targets: this.enemy,
+        x: 600,
+        duration: 2000,
+        ease: "sine.inout",
+        repeat: -1,
+        yoyo: true,
+      });
+      //Animation************************************
+    }
     /////////////////////////////////TEST ENEMY(END)
   }
   update() {
