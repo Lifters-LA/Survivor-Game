@@ -68,7 +68,7 @@ export class MainScene extends Scene {
     this.enemy.body.onCollide = true;
     this.enemy.body.setSize(22, 42);
     this.enemy.body.setOffset(18, 22);
-    this.enemy.patrol = false; //<----Controls Patrol behavior - Set to true to start patrol behavior
+    this.enemy.patrol = true; //<----Controls Patrol behavior - Set to true to start patrol behavior
     //Damage Collider******************************
     this.physics.add.overlap(
       this.enemy,
@@ -84,6 +84,7 @@ export class MainScene extends Scene {
           });
         } else {
           this.player.playerHealth = this.player.playerHealth -= 50;
+          console.log(this.player.playerHealth); ///
           this.player.setTint(0xff0000);
           this.time.delayedCall(100, () => {
             this.player.clearTint();
@@ -95,20 +96,20 @@ export class MainScene extends Scene {
       },
     );
     //Patrol Behavior******************************
+    if (this.enemy.health > 0) {
+      if (this.enemy.patrol == true) {
+        this.enemy.setDirectControl();
+        this.enemy.setImmovable();
 
-    if (this.enemy.patrol == true) {
-      this.enemy.setDirectControl();
-      this.enemy.setImmovable();
-
-      this.tweens.add({
-        targets: this.enemy,
-        x: 600,
-        duration: 2000,
-        ease: "sine.inout",
-        repeat: -1,
-        yoyo: true,
-      });
-      //Animation************************************
+        this.tweens.add({
+          targets: this.enemy,
+          x: 600,
+          duration: 2000,
+          ease: "sine.inout",
+          repeat: -1,
+          yoyo: true,
+        });
+      }
     }
     /////////////////////////////////TEST ENEMY(END)
   }

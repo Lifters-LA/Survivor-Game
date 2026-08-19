@@ -7,7 +7,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.player = player; //<----
     this.maxHealth = 3;
     this.health = this.maxHealth;
-    this.patrol = false;
+    this.patrol = true;
     this.hitBySword = () => {
       this.health -= 1;
 
@@ -70,37 +70,36 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
           this.hitBySword();
         }
       }
+
+      ///////////////////////////////TEST PATROL
+      if (this.patrol == true) {
+        this.setDirectControl();
+        this.setImmovable();
+
+        this.scene.tweens.add({
+          targets: this.enemy,
+          x: 600,
+          duration: 2000,
+          ease: "sine.inout",
+          repeat: -1,
+          yoyo: true,
+        });
+        //Animation************************************
+        console.log(this.body.velocity.x);
+        if (this.body.velocity.x > 0) {
+          const patrolAnimation = this.anims
+            .play("br_zombie_walk", true)
+            .setFlipX(true);
+        }
+        if (this.body.velocity.x < 0) {
+          const patrolAnimation = this.anims
+            .play("br_zombie_walk", true)
+            .setFlipX(false);
+        }
+      }
+      ///////////////////////////////
     } else if (this.health < 1) {
       this.destroy();
     }
-
-    ///////////////////////////////TEST PATROL
-
-    if (this.patrol == true) {
-      this.setDirectControl();
-      this.setImmovable();
-
-      this.scene.tweens.add({
-        targets: this.enemy,
-        x: 600,
-        duration: 2000,
-        ease: "sine.inout",
-        repeat: -1,
-        yoyo: true,
-      });
-      //Animation************************************
-      console.log(this.body.velocity.x);
-      if (this.body.velocity.x > 0) {
-        const patrolAnimation = this.anims
-          .play("br_zombie_walk", true)
-          .setFlipX(true);
-      }
-      if (this.body.velocity.x < 0) {
-        const patrolAnimation = this.anims
-          .play("br_zombie_walk", true)
-          .setFlipX(false);
-      }
-    }
-    ///////////////////////////////
   }
 }
