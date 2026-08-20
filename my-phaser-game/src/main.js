@@ -4,7 +4,6 @@ import { MenuScene } from "./MenuScene.js";
 import { LobbyScene } from "./lobbyScene.js";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:3000");
 import { PvPScene } from "./PvPScene.js";
 const config = {
   type: Phaser.AUTO,
@@ -34,5 +33,5 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
-game.socket = socket;
+
 //https://docs.phaser.io/phaser/concepts/physics/arcade

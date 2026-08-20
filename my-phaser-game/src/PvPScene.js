@@ -40,6 +40,7 @@ export class PvPScene extends Phaser.Scene {
   }
 
   create() {
+    console.log("CREATE IS RUNNING");
     // ============================
     // CREATE MAP
     // ============================
@@ -103,37 +104,63 @@ export class PvPScene extends Phaser.Scene {
 
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-    const tp = this.physics.add.staticGroup();
-    ////player
-    this.player = new Player(this, 300, 350, "wknight");
-    this.player.setScale(3);
-    this.player.setCollideWorldBounds(true);
-    this.player.body.setGravityY(9000);
-    this.player.setBounce(0.2);
-    this.player.body.onCollide = true;
-    this.physics.add.collider(this.player, tp);
-    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
-    this.cameras.main.startFollow(this.player);
-    this.physics.add.collider(this.player, tileLayer1);
-
-    this.physics.add.collider(this.player, tileLayer2);
-
-    //health bar
     this.healthbar = new HealthBar(this, 50, 50, 200, 20);
-    //this.healthbar.setHealth(49);
-
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    socket.on("connect", () => {
+      console.log("CONNECTED:", socket.id);
+    });
     socket.on("current players", (players) => {
+      console.log("players:", players);
+      console.log("socket.id:", socket.id);
+
       Object.values(players).forEach((player) => {
-        if (player.id !== socket.id) {
+        console.log("checking player:", player.id);
+
+        if (player.id === socket.id) {
+          console.log("MATCHED PLAYER");
+
+          this.player = new Player(this, player.x, player.y, "wknight");
+
+          console.log("created at:", this.player.x, this.player.y);
+
+          this.player.id = player.id;
+          this.player.setScale(3);
+          this.player.setCollideWorldBounds(true);
+          this.player.body.setGravityY(9000);
+          this.player.setBounce(0.2);
+          this.player.setDepth(1000);
+
+          this.physics.add.collider(this.player, tileLayer1);
+          this.physics.add.collider(this.player, tileLayer2);
+
+          this.cameras.main.startFollow(this.player);
+
+          this.player.inputKeys = this.input.keyboard.addKeys({
+            up: Phaser.Input.Keyboard.KeyCodes.W,
+            down: Phaser.Input.Keyboard.KeyCodes.S,
+            left: Phaser.Input.Keyboard.KeyCodes.A,
+            right: Phaser.Input.Keyboard.KeyCodes.D,
+            mele: Phaser.Input.Keyboard.KeyCodes.SPACE,
+            mele2: Phaser.Input.Keyboard.KeyCodes.C,
+          });
+        } else {
+          console.log("CREATING ENEMY FROM CURRENT PLAYERS");
+
           this.enemy = new Player(this, player.x, player.y, "wknight");
+
           this.enemy.id = player.id;
           this.enemy.setScale(3);
           this.enemy.setCollideWorldBounds(true);
           this.enemy.body.setGravityY(9000);
           this.enemy.setBounce(0.2);
           this.enemy.body.onCollide = true;
-          this.physics.add.collider(this.enemy, tp);
+
+          this.physics.add.collider(this.enemy, tileLayer1);
+          this.physics.add.collider(this.enemy, tileLayer2);
+
+          if (this.player) {
+            this.physics.add.collider(this.enemy, this.player);
+          }
         }
       });
     });
@@ -154,15 +181,6 @@ export class PvPScene extends Phaser.Scene {
       this.physics.add.collider(this.enemy, tileLayer1);
       this.physics.add.collider(this.enemy, tileLayer2);
       this.physics.add.collider(this.enemy, this.player);
-    });
-
-    this.player.inputKeys = this.input.keyboard.addKeys({
-      up: Phaser.Input.Keyboard.KeyCodes.W,
-      down: Phaser.Input.Keyboard.KeyCodes.S,
-      left: Phaser.Input.Keyboard.KeyCodes.A,
-      right: Phaser.Input.Keyboard.KeyCodes.D,
-      mele: Phaser.Input.Keyboard.KeyCodes.SPACE,
-      mele2: Phaser.Input.Keyboard.KeyCodes.C,
     });
 
     //listen for movement
@@ -231,6 +249,9 @@ export class PvPScene extends Phaser.Scene {
   }
 
   update() {
+    if (!this.player) {
+      return;
+    }
     this.player.update();
     if (this.enemy) {
       let aRange = Phaser.Math.Distance.Between(

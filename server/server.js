@@ -24,6 +24,7 @@ const players = {};
 let playerCount = 0;
 io.on("connection", (socket) => {
   console.log("socket has connected");
+  console.log(playerCount);
 
   /*socket.on("online", () => {
     console.log("waiting to get connected");
@@ -76,9 +77,11 @@ io.on("connection", (socket) => {
   });*/
   //////////////////////////////////////////////////
   if (playerCount >= 2) {
+    console.log("DISCONNECTING because server thinks 2 players exist");
     socket.disconnect();
     return;
   }
+
   playerCount++;
   let spawnX = 180;
   if (playerCount === 2) {
