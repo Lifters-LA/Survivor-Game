@@ -39,7 +39,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         this.direction = "down";
         ////////////////////////////////////
       } else if (this.inputKeys.mele.isDown) {
-        console.log(this.direction);
+        //console.log(this.direction);
         const charAnimation = this.anims.play("w_knight_slash", true);
       } else if (this.inputKeys.mele2.isDown) {
         const charAnimation = this.anims.play("w_knight_stab", true);

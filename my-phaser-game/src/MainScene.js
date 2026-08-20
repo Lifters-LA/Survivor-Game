@@ -45,7 +45,7 @@ export class MainScene extends Scene {
     this.gem.setCollideWorldBounds(true);
     this.physics.add.collider(this.gem, platform);
     ///////////////////////////////TEST PLAYER(START) <--These values added to player class later
-    this.player = new Player(this, 500, 450, "w_knight001", this.Enemy);
+    this.player = new Player(this, 600, 450, "w_knight001", this.Enemy);
     this.player.setCollideWorldBounds(true);
     this.player.body.setSize(40, 42);
     this.player.body.setOffset(14, 16);
@@ -68,6 +68,10 @@ export class MainScene extends Scene {
     this.physics.add.overlap(this.player, this.gem, null, (player, gem) => {
       this.player1Gem.setVisible(true);
       this.player.hasGem = true;
+      this.enemy.patrol = false;
+      console.log(this.enemy.patrol);
+      this.tweens.killAll();
+      this.enemy.setDirectControl(false);
       this.gem.destroy();
     });
     ///////////////////////////////TEST PLAYER(END)
@@ -81,7 +85,7 @@ export class MainScene extends Scene {
     this.enemy.body.onCollide = true;
     this.enemy.body.setSize(22, 42);
     this.enemy.body.setOffset(18, 22);
-    this.enemy.patrol = false; //<----Controls Patrol behavior - Set to true to start patrol behavior
+    this.enemy.patrol = true; //<----Controls Patrol behavior - Set to true to start patrol behavior
     //Damage Collider******************************
     this.physics.add.overlap(
       this.enemy,
@@ -128,7 +132,7 @@ export class MainScene extends Scene {
 
       this.tweens.add({
         targets: this.enemy,
-        x: 600,
+        x: 500,
         duration: 2000,
         ease: "sine.inout",
         repeat: -1,
