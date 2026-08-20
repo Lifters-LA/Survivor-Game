@@ -8,7 +8,7 @@ const config = {
     default: "arcade",
     arcade: {
       gravity: { x: 0, y: 225 }, // Pulls bodies down
-      debug: true,
+      debug: false,
     },
   },
   scene: [MainScene],

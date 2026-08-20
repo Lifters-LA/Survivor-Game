@@ -10,6 +10,10 @@ export class MainScene extends Scene {
   //Load images
   preload() {
     this.load.image("ground", "./src/assets/testplatform.png");
+    this.load.spritesheet("items", "./src/assets/items.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
     this.load.image("player", "./src/assets/wknight.png");
     this.load.image("enemy", "./src/assets/brzombie.png");
     this.load.image("sky", "./src/assets/sky.png");
@@ -35,10 +39,13 @@ export class MainScene extends Scene {
     this.add.image(400, 300, "sky");
     const platform = this.physics.add.staticGroup();
     platform.create(400, 580, "ground").setScale(2).refreshBody();
-    ///////////////////////////////TEST Terrain
-
+    ///////////////////////////////TEST Flag/Jem
+    this.gem = this.physics.add.sprite(100, 500, "items", 207);
+    this.gem.setScale(2);
+    this.gem.setCollideWorldBounds(true);
+    this.physics.add.collider(this.gem, platform);
     ///////////////////////////////TEST PLAYER(START) <--These values added to player class later
-    this.player = new Player(this, 300, 450, "w_knight001", this.Enemy);
+    this.player = new Player(this, 500, 450, "w_knight001", this.Enemy);
     this.player.setCollideWorldBounds(true);
     this.player.body.setSize(40, 42);
     this.player.body.setOffset(14, 16);
@@ -47,7 +54,8 @@ export class MainScene extends Scene {
     this.player.body.onCollide = true;
     this.physics.add.collider(this.player, platform);
     this.physics.add.collider(this.player, this.enemy);
-
+    this.player1Gem = this.add.sprite(0, 0, "items", 207).setVisible(false);
+    this.player1Gem.setScale(2);
     this.player.inputKeys = this.input.keyboard.addKeys({
       up: Phaser.Input.Keyboard.KeyCodes.W,
       down: Phaser.Input.Keyboard.KeyCodes.S,
@@ -56,11 +64,16 @@ export class MainScene extends Scene {
       mele: Phaser.Input.Keyboard.KeyCodes.SPACE,
       mele2: Phaser.Input.Keyboard.KeyCodes.C,
     });
-
+    //Gem Collider******************************
+    this.physics.add.overlap(this.player, this.gem, null, (player, gem) => {
+      this.player1Gem.setVisible(true);
+      this.player.hasGem = true;
+      this.gem.destroy();
+    });
     ///////////////////////////////TEST PLAYER(END)
 
     /////////////////////////////////TEST ENEMY(START) <--These values added to enemy class later
-    this.enemy = new Enemy(this, 500, 450, "br_zombie000", this.player);
+    this.enemy = new Enemy(this, 300, 450, "br_zombie000", this.player);
     this.enemy.setCollideWorldBounds(true);
     this.enemy.body.setGravityY(500);
     this.enemy.setBounce(1, 1);
@@ -89,13 +102,26 @@ export class MainScene extends Scene {
             this.player.clearTint();
           });
           if (this.player.playerHealth < 1) {
-            this.player.destroy();
+            if (this.player.hasGem == true) {
+              this.player1Gem.setVisible(false);
+              this.gem = this.physics.add.sprite(
+                this.player.x,
+                this.player.y,
+                "items",
+                207,
+              );
+              this.gem.setScale(2);
+              this.gem.setCollideWorldBounds(true);
+              this.physics.add.collider(this.gem, platform);
+              this.player.destroy();
+            } else {
+              this.player.destroy();
+            }
           }
         }
       },
     );
     //Patrol Behavior******************************
-
     if (this.enemy.patrol == true) {
       this.enemy.setDirectControl();
       this.enemy.setImmovable();
@@ -108,12 +134,21 @@ export class MainScene extends Scene {
         repeat: -1,
         yoyo: true,
       });
-      //Animation************************************
     }
     /////////////////////////////////TEST ENEMY(END)
   }
   update() {
+    /////////////////////////////////UPDATE PLAYER (START)
     this.player.update();
+    if (this.player.playerHealth) {
+      Phaser.Display.Bounds.SetCenterX(
+        this.player1Gem,
+        this.player.body.center.x,
+      );
+      Phaser.Display.Bounds.SetBottom(this.player1Gem, this.player.body.top);
+    }
+    /////////////////////////////////UPDATE PLAYER (END)
+
     this.enemy.update();
   }
 }
