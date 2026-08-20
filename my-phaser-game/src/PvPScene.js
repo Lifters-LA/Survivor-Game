@@ -12,10 +12,25 @@ export class PvPScene extends Phaser.Scene {
     console.log("pvp scene");
   }
 
-  init() {}
-
   preload() {
-    this.load.image("testPlatform", "./src/assets/testplatform.png");
+    // ==========================
+    // MAP
+    // ============================
+
+    this.load.tilemapTiledJSON("map", "/maps/map.json");
+
+    // ============================
+    // TILESET IMAGES
+    // ============================
+
+    this.load.image("dungeonTiles", "/maps/Dungeon Tile Set (1).png");
+
+    this.load.image("saltTiles", "/maps/Salt.png");
+
+    this.load.image("backgroundTiles", "/maps/Background_0.png");
+
+    this.load.image("grassBackgroundTiles", "/maps/Grass_background_2.png");
+    //////////////////////////////////////////////////////////
     this.load.atlas(
       "wknight",
       "./src/assets/wknight.png",
@@ -25,8 +40,70 @@ export class PvPScene extends Phaser.Scene {
   }
 
   create() {
+    // ============================
+    // CREATE MAP
+    // ============================
+
+    const map = this.make.tilemap({
+      key: "map",
+    });
+
+    // ============================
+    // CONNECT TILESETS
+    // ============================
+
+    const dungeonTiles = map.addTilesetImage(
+      "Dungeon Tile Set (1)",
+      "dungeonTiles",
+    );
+
+    const saltTiles = map.addTilesetImage("Salt", "saltTiles");
+
+    const backgroundTiles = map.addTilesetImage(
+      "Background_0",
+      "backgroundTiles",
+    );
+
+    const grassBackgroundTiles = map.addTilesetImage(
+      "Grass_background_2",
+      "grassBackgroundTiles",
+    );
+
+    // Put all tilesets into one array
+    const allTilesets = [
+      dungeonTiles,
+      saltTiles,
+      backgroundTiles,
+      grassBackgroundTiles,
+    ];
+
+    // ============================
+    // CREATE MAP LAYERS
+    // ============================
+
+    const backgroundLayer = map.createLayer("background", allTilesets);
+
+    const tileLayer1 = map.createLayer("Tile Layer 1", allTilesets);
+
+    const tileLayer2 = map.createLayer("Tile Layer 2", allTilesets);
+
+    // ============================
+    // COLLISION
+    // ============================
+
+    tileLayer1.setCollisionByExclusion([-1]);
+    tileLayer2.setCollisionByExclusion([-1]);
+
+    // You probably do NOT want background colliding.
+    // backgroundLayer.setCollisionByExclusion([-1]);
+
+    // ============================
+    // WORLD BOUNDS
+    // ============================
+
+    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
     const tp = this.physics.add.staticGroup();
-    tp.create(400, 500, "testPlatform").setScale(3).refreshBody();
     ////player
     this.player = new Player(this, 300, 350, "wknight");
     this.player.setScale(3);
@@ -35,6 +112,12 @@ export class PvPScene extends Phaser.Scene {
     this.player.setBounce(0.2);
     this.player.body.onCollide = true;
     this.physics.add.collider(this.player, tp);
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+    this.cameras.main.startFollow(this.player);
+    this.physics.add.collider(this.player, tileLayer1);
+
+    this.physics.add.collider(this.player, tileLayer2);
 
     //health bar
     this.healthbar = new HealthBar(this, 50, 50, 200, 20);
@@ -61,13 +144,15 @@ export class PvPScene extends Phaser.Scene {
         this.enemy.destroy();
       }
       this.enemy = new Player(this, player.x, player.y, "wknight");
+
       this.enemy.id = player.id;
       this.enemy.setScale(3);
       this.enemy.setCollideWorldBounds(true);
       this.enemy.body.setGravityY(9000);
       this.enemy.setBounce(0.2);
       this.enemy.body.onCollide = true;
-      this.physics.add.collider(this.enemy, tp);
+      this.physics.add.collider(this.enemy, tileLayer1);
+      this.physics.add.collider(this.enemy, tileLayer2);
       this.physics.add.collider(this.enemy, this.player);
     });
 
@@ -129,7 +214,7 @@ export class PvPScene extends Phaser.Scene {
 
     socket.on("player died", (player) => {
       if (this.enemy && player.id !== socket.id) {
-        this.enemy.setVisible(false);
+        ths.enemiy.setVisible(false);
         this.enemy.body.enable = false;
       }
     });
