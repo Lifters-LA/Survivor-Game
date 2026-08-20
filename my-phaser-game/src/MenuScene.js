@@ -1,8 +1,8 @@
 import Phaser from "phaser";
 
-export class PvpScene extends Phaser.Scene {
+export class MenuScene extends Phaser.Scene {
   constructor() {
-    super("PvpScene");
+    super("MenuScene");
   }
 
   create() {

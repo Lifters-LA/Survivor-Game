@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import { MainScene } from "./MainScene.js";
-import { PvpScene } from "./pvpScene.js";
+import { MenuScene } from "./MenuScene.js";
 import { LobbyScene } from "./lobbyScene.js";
 import { io } from "socket.io-client";
 
@@ -25,7 +25,7 @@ const config = {
       debug: true,
     },
   },
-  scene: [PvpScene, MainScene, LobbyScene],
+  scene: [MenuScene, MainScene, LobbyScene],
 };
 
 const game = new Phaser.Game(config);
