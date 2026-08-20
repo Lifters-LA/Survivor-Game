@@ -116,12 +116,6 @@ export class MainScene extends Scene {
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
     // ============================
-    // TEST TERRAIN
-    // ============================
-
-    const platform = this.physics.add.staticGroup();
-
-    // ============================
     // PLAYER
     // ============================
 
@@ -134,8 +128,6 @@ export class MainScene extends Scene {
     this.player.setScale(3);
 
     this.player.body.onCollide = true;
-
-    this.physics.add.collider(this.player, platform);
 
     this.player.inputKeys = this.input.keyboard.addKeys({
       up: Phaser.Input.Keyboard.KeyCodes.W,

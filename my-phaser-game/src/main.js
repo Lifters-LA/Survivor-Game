@@ -5,6 +5,7 @@ import { LobbyScene } from "./lobbyScene.js";
 import { io } from "socket.io-client";
 
 const socket = io("http://localhost:3000");
+import { PvPScene } from "./PvPScene.js";
 const config = {
   type: Phaser.AUTO,
 
@@ -25,7 +26,11 @@ const config = {
       debug: true,
     },
   },
-  scene: [MenuScene, MainScene, LobbyScene],
+  scene: [PvPScene, MainScene, LobbyScene, MenuScene],
+
+  scale: {
+    zoom: 1,
+  },
 };
 
 const game = new Phaser.Game(config);
