@@ -133,7 +133,7 @@ export class MainScene extends Scene {
       this.tweens.add({
         targets: this.enemy,
         x: 500,
-        duration: 2000,
+        duration: 10000,
         ease: "sine.inout",
         repeat: -1,
         yoyo: true,
