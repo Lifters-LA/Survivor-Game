@@ -1,15 +1,14 @@
-import { io } from "socket.io-client";
 import Phaser from "phaser";
 import { Player } from "./Player";
 import HealthBar from "./Healthbar.js";
-const socket = io("http://localhost:3000", {
-  autoConnect: false,
-});
 
 export class PvPScene extends Phaser.Scene {
   constructor() {
     super("PvPScene");
     console.log("pvp scene");
+  }
+  init(data) {
+    this.roomCode = data.roomCode;
   }
 
   preload() {
@@ -40,6 +39,7 @@ export class PvPScene extends Phaser.Scene {
   }
 
   create() {
+    const socket = this.game.socket;
     console.log("CREATE IS RUNNING");
     // ============================
     // CREATE MAP
@@ -106,9 +106,8 @@ export class PvPScene extends Phaser.Scene {
 
     this.healthbar = new HealthBar(this, 50, 50, 200, 20);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    socket.on("connect", () => {
-      console.log("CONNECTED:", socket.id);
-    });
+    this.cameras.main.setZoom(0.6);
+
     socket.on("current players", (players) => {
       console.log("players:", players);
       console.log("socket.id:", socket.id);
@@ -129,7 +128,8 @@ export class PvPScene extends Phaser.Scene {
           this.player.body.setGravityY(9000);
           this.player.setBounce(0.2);
           this.player.setDepth(1000);
-
+          this.player.body.setSize(30, 45);
+          this.player.body.setOffset(20, 14);
           this.physics.add.collider(this.player, tileLayer1);
           this.physics.add.collider(this.player, tileLayer2);
 
@@ -154,22 +154,22 @@ export class PvPScene extends Phaser.Scene {
           this.enemy.body.setGravityY(9000);
           this.enemy.setBounce(0.2);
           this.enemy.body.onCollide = true;
+          this.enemy.body.setSize(30, 45);
+          this.enemy.body.setOffset(20, 14);
 
           this.physics.add.collider(this.enemy, tileLayer1);
           this.physics.add.collider(this.enemy, tileLayer2);
-
-          if (this.player) {
-            this.physics.add.collider(this.enemy, this.player);
-          }
+        }
+        if (this.player && this.enemy) {
+          this.physics.add.collider(this.player, this.enemy);
         }
       });
     });
+    socket.emit("getCurrentPlayers", this.roomCode);
 
     socket.on("new player", (player) => {
       console.log("new player recieved", player);
-      if (this.enemy) {
-        this.enemy.destroy();
-      }
+
       this.enemy = new Player(this, player.x, player.y, "wknight");
 
       this.enemy.id = player.id;
@@ -244,11 +244,36 @@ export class PvPScene extends Phaser.Scene {
         this.enemy.body.enable = true;
       }
     });
+    socket.on("player disconnected", (player) => {
+      if (this.enemy && this.enemy.id === player.id) {
+        this.enemy.destroy();
+        this.enemy = null;
+      }
+    });
+    socket.on("player won", (player) => {
+      if (player.id === socket.id) {
+        console.log("YOU WON");
 
-    socket.connect();
+        this.add
+          .text(
+            this.cameras.main.width / 2,
+            this.cameras.main.height / 2,
+            "PLAYER DISCONNECTED, YOU WON!",
+            {
+              fontSize: "64px",
+              color: "#ffffff",
+              fontStyle: "bold",
+            },
+          )
+          .setOrigin(0.5)
+          .setScrollFactor(0)
+          .setDepth(9999);
+      }
+    });
   }
 
   update() {
+    const socket = this.game.socket;
     if (!this.player) {
       return;
     }

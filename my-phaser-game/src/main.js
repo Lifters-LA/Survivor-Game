@@ -1,8 +1,9 @@
 import Phaser from "phaser";
-import { MainScene } from "./MainScene.js";
 import { MenuScene } from "./MenuScene.js";
 import { LobbyScene } from "./lobbyScene.js";
 import { io } from "socket.io-client";
+
+const socket = io("http://localhost:3000");
 
 import { PvPScene } from "./PvPScene.js";
 const config = {
@@ -12,8 +13,8 @@ const config = {
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
-    width: "100%",
-    height: "100%",
+    width: 1000,
+    height: 600,
   },
   dom: {
     createContainer: true,
@@ -25,13 +26,9 @@ const config = {
       debug: true,
     },
   },
-  scene: [PvPScene, MainScene, LobbyScene, MenuScene],
-
-  scale: {
-    zoom: 1,
-  },
+  scene: [MenuScene, LobbyScene, PvPScene],
 };
 
 const game = new Phaser.Game(config);
-
+game.socket = socket;
 //https://docs.phaser.io/phaser/concepts/physics/arcade

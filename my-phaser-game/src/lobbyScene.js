@@ -135,16 +135,18 @@ export class LobbyScene extends Phaser.Scene {
       // Small delay so player sees
       // "PLAYER FOUND"
       this.time.delayedCall(700, () => {
-        this.scene.start("MainScene", {
+        this.scene.start("PvPScene", {
           roomCode,
         });
       });
     });
     this.game.socket.once("joinedOnline", (roomCode) => {
-      this.scene.start("MainScene", {
+      this.scene.start("PvPScene", {
         roomCode: roomCode,
       });
     });
-    this.game.socket.emit("online");
+    if (this.roomCode === "MATCHMAKING") {
+      this.game.socket.emit("online");
+    }
   }
 }

@@ -330,7 +330,7 @@ export class MenuScene extends Phaser.Scene {
     });
 
     this.game.socket.once("startGame", (roomCode) => {
-      this.scene.start("MainScene", {
+      this.scene.start("PvPScene", {
         roomCode,
       });
     });
