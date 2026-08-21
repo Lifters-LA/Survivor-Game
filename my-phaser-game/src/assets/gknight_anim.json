@@ -1,0 +1,280 @@
+{
+    "anims": [
+        {
+            "key": "g_knight_jump",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "gknight",
+                    "frame": "gknight015"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight016"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight017"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight018"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight019"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight020"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight021"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight022"
+                }
+            ]
+        },
+        {
+            "key": "g_knight_stab",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "gknight",
+                    "frame": "gknight042"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight043"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight044"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight045"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight046"
+                }
+            ]
+        },
+        {
+            "key": "g_knight_death",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "gknight",
+                    "frame": "gknight054"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight055"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight056"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight057"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight058"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight059"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight060"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight061"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight062"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight063"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight064"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight065"
+                }
+            ]
+        },
+        {
+            "key": "g_knight_shield_blow",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "gknight",
+                    "frame": "gknight032"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight033"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight034"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight035"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight036"
+                }
+            ]
+        },
+        {
+            "key": "g_knight_shield",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "gknight",
+                    "frame": "gknight027"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight028"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight029"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight030"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight031"
+                }
+            ]
+        },
+        {
+            "key": "g_knight_slash",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "gknight",
+                    "frame": "gknight009"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight010"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight011"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight012"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight013"
+                }
+            ]
+        },
+        {
+            "key": "g_knight_idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "gknight",
+                    "frame": "gknight022"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight023"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight024"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight025"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight026"
+                }
+            ]
+        },
+        {
+            "key": "g_knight_walk",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "gknight",
+                    "frame": "gknight000"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight001"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight002"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight003"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight004"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight005"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight006"
+                },
+                {
+                    "key": "gknight",
+                    "frame": "gknight007"
+                }
+            ]
+        }
+    ]
+}

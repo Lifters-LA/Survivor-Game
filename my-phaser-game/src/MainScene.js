@@ -77,7 +77,7 @@ export class MainScene extends Scene {
     ///////////////////////////////TEST PLAYER(END)
 
     /////////////////////////////////TEST ENEMY(START) <--These values added to enemy class later
-    this.enemy = new Enemy(this, 300, 450, "br_zombie000", this.player);
+    this.enemy = new Enemy(this, 200, 450, "br_zombie000", this.player);
     this.enemy.setCollideWorldBounds(true);
     this.enemy.body.setGravityY(500);
     this.enemy.setBounce(1, 1);

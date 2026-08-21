@@ -1,0 +1,866 @@
+{
+    "frames": [
+        {
+            "filename": "gknight000",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 1,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight001",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 1,
+                "y": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight002",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 71,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight003",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 71,
+                "y": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight004",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 1,
+                "y": 119
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight005",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 71,
+                "y": 119
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight006",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 141,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight007",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 141,
+                "y": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight008",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 141,
+                "y": 119
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight009",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 1,
+                "y": 178
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight010",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 71,
+                "y": 178
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight011",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 141,
+                "y": 178
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight012",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 211,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight013",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 211,
+                "y": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight014",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 211,
+                "y": 119
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight015",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 211,
+                "y": 178
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight016",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 1,
+                "y": 237
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight017",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 71,
+                "y": 237
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight018",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 141,
+                "y": 237
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight019",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 211,
+                "y": 237
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight020",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 281,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight021",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 281,
+                "y": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight022",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 281,
+                "y": 119
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight023",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 281,
+                "y": 178
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight024",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 281,
+                "y": 237
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight025",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 1,
+                "y": 296
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight026",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 71,
+                "y": 296
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight027",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 141,
+                "y": 296
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight028",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 211,
+                "y": 296
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight029",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 281,
+                "y": 296
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight030",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 351,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight031",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 351,
+                "y": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight032",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 351,
+                "y": 119
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight033",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 351,
+                "y": 178
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight034",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 351,
+                "y": 237
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight035",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 351,
+                "y": 296
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight036",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 1,
+                "y": 355
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight037",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 71,
+                "y": 355
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight038",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 141,
+                "y": 355
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight039",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 211,
+                "y": 355
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight040",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 281,
+                "y": 355
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight041",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 351,
+                "y": 355
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight042",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 1,
+                "y": 414
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight043",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 71,
+                "y": 414
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight044",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 141,
+                "y": 414
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight045",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 211,
+                "y": 414
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight046",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 281,
+                "y": 414
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight047",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 351,
+                "y": 414
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight048",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 421,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight049",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 421,
+                "y": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight050",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 421,
+                "y": 119
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight051",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 421,
+                "y": 178
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight052",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 421,
+                "y": 237
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight053",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 421,
+                "y": 296
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight054",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 421,
+                "y": 355
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight055",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 421,
+                "y": 414
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight056",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 1,
+                "y": 473
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight057",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 71,
+                "y": 473
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight058",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 141,
+                "y": 473
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight059",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 211,
+                "y": 473
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight060",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 281,
+                "y": 473
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight061",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 351,
+                "y": 473
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight062",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 421,
+                "y": 473
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight063",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 491,
+                "y": 1
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight064",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 491,
+                "y": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gknight065",
+            "frame": {
+                "w": 69,
+                "h": 58,
+                "x": 491,
+                "y": 119
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Gamma V2",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}
