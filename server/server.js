@@ -21,6 +21,7 @@ app.use("/api", commonRouter);
 
 const waitingList = [];
 const players = {};
+const gems = {};
 
 io.on("connection", (socket) => {
   console.log("socket connected:", socket.id);
@@ -38,6 +39,11 @@ io.on("connection", (socket) => {
 
       player1.join(roomCode);
       player2.join(roomCode);
+      gems[roomCode] = {
+        ownerId: null,
+        x: 500,
+        y: 300,
+      };
 
       // PLAYER 1 - LEFT
       players[player1.id] = {
@@ -162,12 +168,82 @@ io.on("connection", (socket) => {
     });
   });
 
+  socket.on("gem picked up", ({ roomCode }) => {
+    const player = players[socket.id];
+
+    if (!player) {
+      return;
+    }
+
+    const gem = gems[roomCode];
+
+    if (!gem) {
+      return;
+    }
+
+    // Someone already has the gem
+    if (gem.ownerId !== null) {
+      return;
+    }
+
+    // Make sure this player actually belongs to this room
+    if (player.roomCode !== roomCode) {
+      return;
+    }
+
+    gem.ownerId = socket.id;
+
+    io.to(roomCode).emit("gem picked up", {
+      id: socket.id,
+    });
+  });
+
+  socket.on("gem dropped", ({ roomCode, x, y }) => {
+    const player = players[socket.id];
+
+    if (!player) {
+      return;
+    }
+
+    const gem = gems[roomCode];
+
+    if (!gem) {
+      return;
+    }
+
+    // Only the player carrying the gem can drop it
+    if (gem.ownerId !== socket.id) {
+      return;
+    }
+
+    gem.ownerId = null;
+    gem.x = x;
+    gem.y = y;
+
+    io.to(roomCode).emit("gem dropped", {
+      x,
+      y,
+    });
+  });
+
   // DISCONNECT
   socket.on("disconnect", () => {
     const player = players[socket.id];
 
     if (player) {
       const roomCode = player.roomCode;
+      const gem = gems[roomCode];
+
+      if (gem && gem.ownerId === socket.id) {
+        gem.ownerId = null;
+        gem.x = player.x;
+        gem.y = player.y;
+
+        io.to(roomCode).emit("gem dropped", {
+          x: player.x,
+          y: player.y,
+        });
+      }
 
       delete players[socket.id];
 
@@ -212,6 +288,11 @@ io.on("connection", (socket) => {
     }
 
     socket.join(roomCode);
+    gems[roomCode] = {
+      ownerId: null,
+      x: 500,
+      y: 300,
+    };
 
     players[socket.id] = {
       id: socket.id,
