@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { Player } from "./Player";
 import HealthBar from "./Healthbar.js";
+import { Enemy } from "./Enemy.js";
 
 export class PvPScene extends Phaser.Scene {
   constructor() {
@@ -140,6 +141,36 @@ export class PvPScene extends Phaser.Scene {
       .setVisible(false)
       .setDepth(2000);
     ///////////////////////
+    this.enemies = {};
+
+    socket.on("current enemies", (enemies) => {
+      Object.values(enemies).forEach((enemyData) => {
+        const enemy = new Enemy(
+          this,
+          enemyData.x,
+          enemyData.y,
+          "br_zombie000",
+          this.player,
+        );
+
+        enemy.id = enemyData.id;
+        enemy.health = enemyData.health;
+
+        enemy.setScale(3);
+        enemy.setCollideWorldBounds(true);
+
+        enemy.body.setGravityY(500);
+        enemy.body.setSize(22, 42);
+        enemy.body.setOffset(18, 22);
+
+        // ADD COLLIDERS HERE
+        this.physics.add.collider(enemy, tileLayer1);
+        this.physics.add.collider(enemy, tileLayer2);
+
+        this.enemies[enemyData.id] = enemy;
+      });
+    });
+
     socket.on("current players", (players) => {
       console.log("players:", players);
       console.log("socket.id:", socket.id);
@@ -201,6 +232,7 @@ export class PvPScene extends Phaser.Scene {
           this.physics.add.collider(this.enemy, tileLayer2);
         }
       });
+      socket.emit("getCurrentEnemies", this.roomCode);
     });
     socket.emit("getCurrentPlayers", this.roomCode);
 
@@ -375,6 +407,10 @@ export class PvPScene extends Phaser.Scene {
     if (!this.player) {
       return;
     }
+    Object.values(this.enemies).forEach((enemy) => {
+      enemy.update();
+    });
+
     this.player.update();
     if (this.enemy) {
       let aRange = Phaser.Math.Distance.Between(

@@ -22,6 +22,59 @@ app.use("/api", commonRouter);
 const waitingList = [];
 const players = {};
 const gems = {};
+const enemies = {};
+
+function createEnemies(roomCode) {
+  enemies[roomCode] = {
+    enemy1: {
+      id: "enemy1",
+      roomCode,
+      x: 500,
+      y: 900,
+      health: 3,
+    },
+
+    enemy2: {
+      id: "enemy2",
+      roomCode,
+      x: 900,
+      y: 700,
+      health: 3,
+    },
+
+    enemy3: {
+      id: "enemy3",
+      roomCode,
+      x: 1300,
+      y: 1000,
+      health: 3,
+    },
+
+    enemy4: {
+      id: "enemy4",
+      roomCode,
+      x: 1800,
+      y: 800,
+      health: 3,
+    },
+
+    enemy5: {
+      id: "enemy5",
+      roomCode,
+      x: 2300,
+      y: 950,
+      health: 3,
+    },
+
+    enemy6: {
+      id: "enemy6",
+      roomCode,
+      x: 2700,
+      y: 750,
+      health: 3,
+    },
+  };
+}
 
 io.on("connection", (socket) => {
   console.log("socket connected:", socket.id);
@@ -36,6 +89,7 @@ io.on("connection", (socket) => {
       const player2 = waitingList.shift();
 
       const roomCode = String(Date.now());
+      createEnemies(roomCode);
 
       player1.join(roomCode);
       player2.join(roomCode);
@@ -225,6 +279,9 @@ io.on("connection", (socket) => {
       y,
     });
   });
+  socket.on("getCurrentEnemies", (roomCode) => {
+    socket.emit("current enemies", enemies[roomCode]);
+  });
 
   // DISCONNECT
   socket.on("disconnect", () => {
@@ -318,6 +375,7 @@ io.on("connection", (socket) => {
       socket.emit("roomError", "Room already exists");
       return;
     }
+    createEnemies(roomCode);
 
     socket.join(roomCode);
 
