@@ -49,6 +49,7 @@ io.on("connection", (socket) => {
       players[player1.id] = {
         id: player1.id,
         roomCode,
+        side: "left",
         x: 180,
         y: 1000,
         health: 100,
@@ -58,6 +59,7 @@ io.on("connection", (socket) => {
       players[player2.id] = {
         id: player2.id,
         roomCode,
+        side: "right",
         x: 3000,
         y: 1000,
         health: 100,
@@ -105,7 +107,7 @@ io.on("connection", (socket) => {
   });
 
   // ATTACK
-  socket.on("player attack", () => {
+  socket.on("player attack", (attack) => {
     const attacker = players[socket.id];
 
     if (!attacker) {
@@ -119,8 +121,13 @@ io.on("connection", (socket) => {
     if (!target) {
       return;
     }
+    if (attack === "mele1") {
+      target.health -= 25;
+    }
 
-    target.health -= 50;
+    if (attack === "mele2") {
+      target.health -= 50;
+    }
 
     if (target.health <= 0) {
       target.health = 0;
@@ -223,6 +230,33 @@ io.on("connection", (socket) => {
     io.to(roomCode).emit("gem dropped", {
       x,
       y,
+    });
+  });
+
+  socket.on("player won", ({ roomCode }) => {
+    const player = players[socket.id];
+
+    if (!player) {
+      return;
+    }
+
+    if (player.roomCode !== roomCode) {
+      return;
+    }
+
+    const gem = gems[roomCode];
+
+    if (!gem) {
+      return;
+    }
+
+    // Player must actually be carrying the gem
+    if (gem.ownerId !== socket.id) {
+      return;
+    }
+
+    io.to(roomCode).emit("player won", {
+      id: socket.id,
     });
   });
 
