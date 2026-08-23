@@ -116,7 +116,7 @@ export class PvPScene extends Phaser.Scene {
 
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-    this.healthbar = new HealthBar(this, 50, 50, 200, 20);
+    this.healthbar = new HealthBar(this, 50, 50, 120, 10);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setZoom(0.6);
     this.gem = this.physics.add.sprite(1593, 300, "items", 207);
@@ -376,6 +376,9 @@ export class PvPScene extends Phaser.Scene {
       return;
     }
     this.player.update();
+
+    this.healthbar.setPosition(this.player.x - 80, this.player.y - 120);
+
     if (this.enemy) {
       let aRange = Phaser.Math.Distance.Between(
         this.player.x,
@@ -388,13 +391,13 @@ export class PvPScene extends Phaser.Scene {
         aRange < 150 &&
         Phaser.Input.Keyboard.JustDown(this.player.inputKeys.mele)
       ) {
-        socket.emit("player attack");
+        socket.emit("player attack", "mele1");
       }
       if (
         aRange < 150 &&
         Phaser.Input.Keyboard.JustDown(this.player.inputKeys.mele2)
       ) {
-        socket.emit("player attack");
+        socket.emit("player attack", "mele2");
       }
     }
 
