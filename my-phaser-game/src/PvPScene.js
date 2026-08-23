@@ -30,12 +30,24 @@ export class PvPScene extends Phaser.Scene {
 
     this.load.image("grassBackgroundTiles", "/maps/Grass_background_2.png");
     //////////////////////////////////////////////////////////
+    this.load.spritesheet("items", "./src/assets/items.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+    this.load.image("player", "./src/assets/wknight.png");
+    this.load.image("enemy", "./src/assets/brzombie.png");
     this.load.atlas(
       "wknight",
       "./src/assets/wknight.png",
       "./src/assets/wknight_atlas.json",
     );
+    this.load.atlas(
+      "brzombie",
+      "./src/assets/brzombie.png",
+      "./src/assets/brzombie_atlas.json",
+    );
     this.load.animation("wknight_anim", "./src/assets/wknight_anim.json");
+    this.load.animation("brzombie_anim", "./src/assets/brzombie_anim.json");
   }
 
   create() {
@@ -107,7 +119,27 @@ export class PvPScene extends Phaser.Scene {
     this.healthbar = new HealthBar(this, 50, 50, 200, 20);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setZoom(0.6);
+    this.gem = this.physics.add.sprite(1593, 300, "items", 207);
+    this.gem.setScale(2);
+    this.gem.setCollideWorldBounds(true);
+    this.gem.setDepth(900);
 
+    this.physics.add.collider(this.gem, tileLayer1);
+    this.physics.add.collider(this.gem, tileLayer2);
+    // visual gem above local player's head
+    this.playerGem = this.add
+      .sprite(0, 0, "items", 207)
+      .setScale(2)
+      .setVisible(false)
+      .setDepth(2000);
+
+    // visual gem above enemy's head
+    this.enemyGem = this.add
+      .sprite(0, 0, "items", 207)
+      .setScale(2)
+      .setVisible(false)
+      .setDepth(2000);
+    ///////////////////////
     socket.on("current players", (players) => {
       console.log("players:", players);
       console.log("socket.id:", socket.id);
@@ -119,6 +151,7 @@ export class PvPScene extends Phaser.Scene {
           console.log("MATCHED PLAYER");
 
           this.player = new Player(this, player.x, player.y, "wknight");
+          this.player.hasGem = false;
 
           console.log("created at:", this.player.x, this.player.y);
 
@@ -143,11 +176,18 @@ export class PvPScene extends Phaser.Scene {
             mele: Phaser.Input.Keyboard.KeyCodes.SPACE,
             mele2: Phaser.Input.Keyboard.KeyCodes.C,
           });
+          this.physics.add.overlap(this.player, this.gem, () => {
+            if (!this.gem || !this.gem.active) return;
+
+            socket.emit("gem picked up", {
+              roomCode: this.roomCode,
+            });
+          });
         } else {
           console.log("CREATING ENEMY FROM CURRENT PLAYERS");
 
           this.enemy = new Player(this, player.x, player.y, "wknight");
-
+          this.enemy.hasGem = false;
           this.enemy.id = player.id;
           this.enemy.setScale(3);
           this.enemy.setCollideWorldBounds(true);
@@ -159,9 +199,6 @@ export class PvPScene extends Phaser.Scene {
 
           this.physics.add.collider(this.enemy, tileLayer1);
           this.physics.add.collider(this.enemy, tileLayer2);
-        }
-        if (this.player && this.enemy) {
-          this.physics.add.collider(this.player, this.enemy);
         }
       });
     });
@@ -194,13 +231,45 @@ export class PvPScene extends Phaser.Scene {
         }
       }
     });
+    ////////////////////
+    socket.on("gem picked up", (player) => {
+      if (this.gem) {
+        this.gem.destroy();
+        this.gem = null;
+      }
 
+      if (player.id === socket.id) {
+        this.player.hasGem = true;
+        this.playerGem.setVisible(true);
+
+        if (this.enemy) {
+          this.enemy.hasGem = false;
+          this.enemyGem.setVisible(false);
+        }
+      } else if (this.enemy && player.id === this.enemy.id) {
+        this.enemy.hasGem = true;
+        this.enemyGem.setVisible(true);
+
+        this.player.hasGem = false;
+        this.playerGem.setVisible(false);
+      }
+    });
     //listen for health and damage
     socket.on("player health and damage", (player) => {
       if (player.id === socket.id) {
         this.healthbar.setHealth(player.health);
 
         if (player.health <= 0) {
+          if (this.player.hasGem) {
+            socket.emit("gem dropped", {
+              roomCode: this.roomCode,
+              x: this.player.x,
+              y: this.player.y,
+            });
+
+            this.player.hasGem = false;
+            this.playerGem.setVisible(false);
+          }
           this.player.setVisible(false);
           this.player.body.enable = false;
 
@@ -228,6 +297,35 @@ export class PvPScene extends Phaser.Scene {
           this.enemy.clearTint();
         });
       }
+    });
+    socket.on("gem dropped", ({ x, y }) => {
+      this.player.hasGem = false;
+      this.playerGem.setVisible(false);
+
+      if (this.enemy) {
+        this.enemy.hasGem = false;
+        this.enemyGem.setVisible(false);
+      }
+
+      if (this.gem) {
+        this.gem.destroy();
+      }
+
+      this.gem = this.physics.add.sprite(x, y, "items", 207);
+
+      this.gem.setScale(2);
+      this.gem.setCollideWorldBounds(true);
+      this.gem.setDepth(900);
+
+      this.physics.add.collider(this.gem, tileLayer1);
+      this.physics.add.collider(this.gem, tileLayer2);
+      this.physics.add.overlap(this.player, this.gem, () => {
+        if (!this.gem || !this.gem.active) return;
+
+        socket.emit("gem picked up", {
+          roomCode: this.roomCode,
+        });
+      });
     });
 
     socket.on("player died", (player) => {
@@ -313,5 +411,12 @@ export class PvPScene extends Phaser.Scene {
       flipX: this.player.flipX,
       animation: animation,
     });
+    if (this.player.hasGem) {
+      this.playerGem.setPosition(this.player.x, this.player.y - 80);
+    }
+
+    if (this.enemy && this.enemy.hasGem) {
+      this.enemyGem.setPosition(this.enemy.x, this.enemy.y - 80);
+    }
   }
 }

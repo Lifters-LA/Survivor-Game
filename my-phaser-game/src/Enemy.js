@@ -24,7 +24,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.health > 0) {
       ///////////////////////////////ZOMBIE MOVEMENT/HEALTH DATA
       //Set speed and calculate range between the zombie and it's prey! <---Adjust this for the map!!!
-      this.speed = 10;
+      this.speed = 200;
       this.maximumHeight = 350;
       this.minimumHeight = 450;
       let aRange = Phaser.Math.Distance.Between(
@@ -70,36 +70,26 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
           this.hitBySword();
         }
       }
-
-      ///////////////////////////////TEST PATROL
-      if (this.patrol == true) {
-        this.setDirectControl();
-        this.setImmovable();
-
-        this.scene.tweens.add({
-          targets: this.enemy,
-          x: 600,
-          duration: 2000,
-          ease: "sine.inout",
-          repeat: -1,
-          yoyo: true,
-        });
-        //Animation************************************
-        console.log(this.body.velocity.x);
-        if (this.body.velocity.x > 0) {
-          const patrolAnimation = this.anims
-            .play("br_zombie_walk", true)
-            .setFlipX(true);
-        }
-        if (this.body.velocity.x < 0) {
-          const patrolAnimation = this.anims
-            .play("br_zombie_walk", true)
-            .setFlipX(false);
-        }
-      }
-      ///////////////////////////////
     } else if (this.health < 1) {
       this.destroy();
     }
+
+    ///////////////////////////////TEST PATROL
+
+    if (this.patrol == true) {
+      //Animation************************************
+      console.log(this.body.velocity.x);
+      if (this.body.velocity.x > 0) {
+        const patrolAnimation = this.anims
+          .play("br_zombie_walk", true)
+          .setFlipX(true);
+      }
+      if (this.body.velocity.x < 0) {
+        const patrolAnimation = this.anims
+          .play("br_zombie_walk", true)
+          .setFlipX(false);
+      }
+    }
+    ///////////////////////////////
   }
 }

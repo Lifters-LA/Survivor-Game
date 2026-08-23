@@ -10,6 +10,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.playerHealth = this.maximumHealth;
     this.maxShieldHealth = 2000;
     this.shieldHealth = this.maximumHealth;
+    this.hasGem = false;
     this.direction = null;
   }
 
