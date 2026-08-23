@@ -36,6 +36,7 @@ export class PvPScene extends Phaser.Scene {
     });
     this.load.image("player", "./src/assets/wknight.png");
     this.load.image("enemy", "./src/assets/brzombie.png");
+
     this.load.atlas(
       "wknight",
       "./src/assets/wknight.png",
@@ -51,6 +52,7 @@ export class PvPScene extends Phaser.Scene {
   }
 
   create() {
+    this.gameOver = false;
     const socket = this.game.socket;
     console.log("CREATE IS RUNNING");
     // ============================
@@ -139,7 +141,29 @@ export class PvPScene extends Phaser.Scene {
       .setScale(2)
       .setVisible(false)
       .setDepth(2000);
-    ///////////////////////
+
+    this.leftPortal = this.physics.add.sprite(200, 1000, "items", 57);
+    this.leftPortal.setScale(6);
+    this.leftPortal.setDepth(900);
+
+    this.rightPortal = this.physics.add.sprite(3000, 1000, "items", 57);
+    this.rightPortal.setScale(6);
+    this.rightPortal.setDepth(900);
+
+    this.physics.add.collider(this.leftPortal, tileLayer1);
+    this.physics.add.collider(this.leftPortal, tileLayer2);
+
+    this.physics.add.collider(this.rightPortal, tileLayer1);
+    this.physics.add.collider(this.rightPortal, tileLayer2);
+
+    this.tweens.add({
+      targets: [this.leftPortal, this.rightPortal],
+      alpha: 0.15,
+      duration: 100,
+      yoyo: true,
+      repeat: -1,
+    });
+
     socket.on("current players", (players) => {
       console.log("players:", players);
       console.log("socket.id:", socket.id);
@@ -152,6 +176,7 @@ export class PvPScene extends Phaser.Scene {
 
           this.player = new Player(this, player.x, player.y, "wknight");
           this.player.hasGem = false;
+          this.player.side = player.side;
 
           console.log("created at:", this.player.x, this.player.y);
 
@@ -183,11 +208,43 @@ export class PvPScene extends Phaser.Scene {
               roomCode: this.roomCode,
             });
           });
-        } else {
+          this.physics.add.overlap(this.player, this.leftPortal, () => {
+            if (
+              this.player.hasGem &&
+              this.player.side === "left" &&
+              !this.gameOver
+            ) {
+              this.gameOver = true;
+
+              console.log("LEFT PLAYER BROUGHT GEM HOME!");
+
+              socket.emit("player won", {
+                roomCode: this.roomCode,
+              });
+            }
+          });
+
+          this.physics.add.overlap(this.player, this.rightPortal, () => {
+            if (
+              this.player.hasGem &&
+              this.player.side === "right" &&
+              !this.gameOver
+            ) {
+              this.gameOver = true;
+
+              console.log("RIGHT PLAYER BROUGHT GEM HOME!");
+
+              socket.emit("player won", {
+                roomCode: this.roomCode,
+              });
+            }
+          });
+
           console.log("CREATING ENEMY FROM CURRENT PLAYERS");
 
           this.enemy = new Player(this, player.x, player.y, "wknight");
           this.enemy.hasGem = false;
+          this.enemy.side = player.side;
           this.enemy.id = player.id;
           this.enemy.setScale(3);
           this.enemy.setCollideWorldBounds(true);
@@ -349,32 +406,65 @@ export class PvPScene extends Phaser.Scene {
       }
     });
     socket.on("player won", (player) => {
-      if (player.id === socket.id) {
-        console.log("YOU WON");
+      this.gameOver = true;
 
-        this.add
-          .text(
-            this.cameras.main.width / 2,
-            this.cameras.main.height / 2,
-            "PLAYER DISCONNECTED, YOU WON!",
-            {
-              fontSize: "64px",
-              color: "#ffffff",
-              fontStyle: "bold",
+      const resultText = player.id === socket.id ? "YOU WON!" : "YOU LOSE!";
+
+      console.log(resultText);
+
+      this.player.body.setVelocity(0, 0);
+
+      this.add
+        .text(
+          this.cameras.main.centerX,
+          this.cameras.main.centerY - 100,
+          resultText,
+          {
+            fontSize: "64px",
+            color: "#ffffff",
+            fontStyle: "bold",
+          },
+        )
+        .setOrigin(0.5)
+        .setScrollFactor(0)
+        .setDepth(9999);
+
+      const returnMenu = this.add
+        .text(
+          this.cameras.main.centerX,
+          this.cameras.main.centerY + 100,
+          "RETURN TO MENU",
+          {
+            fontSize: "32px",
+            color: "#ffffff",
+            backgroundColor: "#222222",
+            padding: {
+              x: 20,
+              y: 10,
             },
-          )
-          .setOrigin(0.5)
-          .setScrollFactor(0)
-          .setDepth(9999);
-      }
+          },
+        )
+        .setOrigin(0.5)
+        .setScrollFactor(0)
+        .setDepth(9999)
+        .setInteractive({ useHandCursor: true });
+
+      returnMenu.on("pointerdown", () => {
+        this.scene.start("MenuScene");
+      });
     });
   }
-
   update() {
     const socket = this.game.socket;
+
+    if (this.gameOver) {
+      return;
+    }
+
     if (!this.player) {
       return;
     }
+
     this.player.update();
 
     this.healthbar.setPosition(this.player.x - 80, this.player.y - 120);
