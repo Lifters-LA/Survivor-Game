@@ -35,22 +35,22 @@ function createEnemies(roomCode) {
       animation: "idle",
       flipX: false,
       patrolDirection: 1,
-      patrolLeft: 0,
-      patrolRight: 300,
+      patrolLeft: 300,
+      patrolRight: 550,
       lastAttackTime: 0,
     },
 
     enemy2: {
       id: "enemy2",
       roomCode,
-      x: 900,
+      x: 850,
       y: 860,
       health: 3,
       animation: "idle",
       flipX: false,
       patrolDirection: 1,
-      patrolLeft: 700,
-      patrolRight: 1100,
+      patrolLeft: 900,
+      patrolRight: 1200,
       lastAttackTime: 0,
     },
 
@@ -63,8 +63,8 @@ function createEnemies(roomCode) {
       animation: "idle",
       flipX: false,
       patrolDirection: 1,
-      patrolLeft: 1100,
-      patrolRight: 1500,
+      patrolLeft: 1180,
+      patrolRight: 1490,
       lastAttackTime: 0,
     },
 
@@ -78,7 +78,7 @@ function createEnemies(roomCode) {
       flipX: false,
       patrolDirection: 1,
       patrolLeft: 1600,
-      patrolRight: 2000,
+      patrolRight: 2100,
       lastAttackTime: 0,
     },
 
@@ -91,8 +91,8 @@ function createEnemies(roomCode) {
       animation: "idle",
       flipX: false,
       patrolDirection: 1,
-      patrolLeft: 2100,
-      patrolRight: 2500,
+      patrolLeft: 2300,
+      patrolRight: 2630,
       lastAttackTime: 0,
     },
 
@@ -113,13 +113,13 @@ function createEnemies(roomCode) {
     enemy7: {
       id: "enemy7",
       roomCode,
-      x: 1300,
+      x: 1380,
       y: 535,
       health: 3,
       animation: "idle",
       flipX: false,
       patrolDirection: 1,
-      patrolLeft: 1100,
+      patrolLeft: 1380,
       patrolRight: 1500,
       lastAttackTime: 0,
     },
@@ -127,14 +127,14 @@ function createEnemies(roomCode) {
     enemy8: {
       id: "enemy8",
       roomCode,
-      x: 1500,
+      x: 1700,
       y: 535,
       health: 3,
       animation: "idle",
       flipX: false,
       patrolDirection: 1,
-      patrolLeft: 1800,
-      patrolRight: 2200,
+      patrolLeft: 1680,
+      patrolRight: 1800,
       lastAttackTime: 0,
     },
 
@@ -147,8 +147,8 @@ function createEnemies(roomCode) {
       animation: "idle",
       flipX: false,
       patrolDirection: 1,
-      patrolLeft: 1200,
-      patrolRight: 1600,
+      patrolLeft: 1100,
+      patrolRight: 1500,
       lastAttackTime: 0,
     },
 
@@ -161,19 +161,19 @@ function createEnemies(roomCode) {
       animation: "idle",
       flipX: false,
       patrolDirection: 1,
-      patrolLeft: 2300,
-      patrolRight: 2700,
+      patrolLeft: 1800,
+      patrolRight: 2180,
       lastAttackTime: 0,
     },
   };
 }
-const ZOMBIE_PATROL_SPEED = 1;
-const ZOMBIE_SPEED = 3;
+const ZOMBIE_PATROL_SPEED = 2;
+const ZOMBIE_SPEED = 4;
 const ZOMBIE_CHASE_RANGE = 300;
 const ZOMBIE_ATTACK_RANGE = 90;
 const ZOMBIE_DAMAGE = 10;
 const ZOMBIE_ATTACK_COOLDOWN = 1000;
-const ZOMBIE_GEM_SPEED = 4;
+const ZOMBIE_GEM_SPEED = 6;
 
 function getRoomPlayers(roomCode) {
   return Object.values(players).filter((player) => {
