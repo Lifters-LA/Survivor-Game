@@ -37,6 +37,7 @@ export class PvPScene extends Phaser.Scene {
     });
     this.load.image("player", "./src/assets/wknight.png");
     this.load.image("enemy", "./src/assets/brzombie.png");
+
     this.load.atlas(
       "wknight",
       "./src/assets/wknight.png",
@@ -52,6 +53,10 @@ export class PvPScene extends Phaser.Scene {
   }
 
   create() {
+    this.gameOver = false;
+    this.player = null;
+    this.enemy = null;
+
     const socket = this.game.socket;
     console.log("CREATE IS RUNNING");
     // ============================
@@ -117,7 +122,7 @@ export class PvPScene extends Phaser.Scene {
 
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-    this.healthbar = new HealthBar(this, 50, 50, 200, 20);
+    this.healthbar = new HealthBar(this, 50, 50, 120, 10);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setZoom(0.6);
     this.gem = this.physics.add.sprite(1593, 300, "items", 207);
@@ -145,21 +150,15 @@ export class PvPScene extends Phaser.Scene {
 
     socket.on("current enemies", (enemies) => {
       Object.values(enemies).forEach((enemyData) => {
-        const enemy = new Enemy(
-          this,
-          enemyData.x,
-          enemyData.y,
-          "br_zombie000",
-          this.player,
-        );
-
+        const enemy = new Enemy(this, enemyData.x, enemyData.y, "brzombie");
         enemy.id = enemyData.id;
         enemy.health = enemyData.health;
 
         enemy.setScale(3);
         enemy.setCollideWorldBounds(true);
 
-        enemy.body.setGravityY(500);
+        enemy.body.setAllowGravity(false);
+
         enemy.body.setSize(22, 42);
         enemy.body.setOffset(18, 22);
 
@@ -169,6 +168,28 @@ export class PvPScene extends Phaser.Scene {
 
         this.enemies[enemyData.id] = enemy;
       });
+    });
+
+    this.leftPortal = this.physics.add.sprite(200, 1000, "items", 57);
+    this.leftPortal.setScale(6);
+    this.leftPortal.setDepth(900);
+
+    this.rightPortal = this.physics.add.sprite(3000, 1000, "items", 57);
+    this.rightPortal.setScale(6);
+    this.rightPortal.setDepth(900);
+
+    this.physics.add.collider(this.leftPortal, tileLayer1);
+    this.physics.add.collider(this.leftPortal, tileLayer2);
+
+    this.physics.add.collider(this.rightPortal, tileLayer1);
+    this.physics.add.collider(this.rightPortal, tileLayer2);
+
+    this.tweens.add({
+      targets: [this.leftPortal, this.rightPortal],
+      alpha: 0.15,
+      duration: 100,
+      yoyo: true,
+      repeat: -1,
     });
 
     socket.on("current players", (players) => {
@@ -183,6 +204,7 @@ export class PvPScene extends Phaser.Scene {
 
           this.player = new Player(this, player.x, player.y, "wknight");
           this.player.hasGem = false;
+          this.player.side = player.side;
 
           console.log("created at:", this.player.x, this.player.y);
 
@@ -196,6 +218,9 @@ export class PvPScene extends Phaser.Scene {
           this.player.body.setOffset(20, 14);
           this.physics.add.collider(this.player, tileLayer1);
           this.physics.add.collider(this.player, tileLayer2);
+          Object.values(this.enemies).forEach((zombie) => {
+            zombie.player = this.player;
+          });
 
           this.cameras.main.startFollow(this.player);
 
@@ -214,11 +239,43 @@ export class PvPScene extends Phaser.Scene {
               roomCode: this.roomCode,
             });
           });
+          this.physics.add.overlap(this.player, this.leftPortal, () => {
+            if (
+              this.player.hasGem &&
+              this.player.side === "left" &&
+              !this.gameOver
+            ) {
+              this.gameOver = true;
+
+              console.log("LEFT PLAYER BROUGHT GEM HOME!");
+
+              socket.emit("player won", {
+                roomCode: this.roomCode,
+              });
+            }
+          });
+
+          this.physics.add.overlap(this.player, this.rightPortal, () => {
+            if (
+              this.player.hasGem &&
+              this.player.side === "right" &&
+              !this.gameOver
+            ) {
+              this.gameOver = true;
+
+              console.log("RIGHT PLAYER BROUGHT GEM HOME!");
+
+              socket.emit("player won", {
+                roomCode: this.roomCode,
+              });
+            }
+          });
         } else {
           console.log("CREATING ENEMY FROM CURRENT PLAYERS");
 
           this.enemy = new Player(this, player.x, player.y, "wknight");
           this.enemy.hasGem = false;
+          this.enemy.side = player.side;
           this.enemy.id = player.id;
           this.enemy.setScale(3);
           this.enemy.setCollideWorldBounds(true);
@@ -278,12 +335,18 @@ export class PvPScene extends Phaser.Scene {
           this.enemy.hasGem = false;
           this.enemyGem.setVisible(false);
         }
+        Object.values(this.enemies).forEach((zombie) => {
+          zombie.target = this.player;
+        });
       } else if (this.enemy && player.id === this.enemy.id) {
         this.enemy.hasGem = true;
         this.enemyGem.setVisible(true);
 
         this.player.hasGem = false;
         this.playerGem.setVisible(false);
+        Object.values(this.enemies).forEach((zombie) => {
+          zombie.target = this.enemy;
+        });
       }
     });
     //listen for health and damage
@@ -315,7 +378,15 @@ export class PvPScene extends Phaser.Scene {
         }
       }
     });
+    socket.on("zombie damaged", ({ enemyId }) => {
+      const zombie = this.enemies[enemyId];
 
+      if (!zombie) {
+        return;
+      }
+
+      zombie.showHit();
+    });
     socket.on("player damaged", (player) => {
       if (player.id === socket.id) {
         this.player.setTint(0xff0000);
@@ -338,6 +409,9 @@ export class PvPScene extends Phaser.Scene {
         this.enemy.hasGem = false;
         this.enemyGem.setVisible(false);
       }
+      Object.values(this.enemies).forEach((zombie) => {
+        zombie.target = null;
+      });
 
       if (this.gem) {
         this.gem.destroy();
@@ -366,6 +440,32 @@ export class PvPScene extends Phaser.Scene {
         this.enemy.body.enable = false;
       }
     });
+    socket.on("enemy state", (serverEnemies) => {
+      // ==========================
+      // UPDATE EXISTING ZOMBIES
+      // ==========================
+
+      Object.values(serverEnemies).forEach((enemyData) => {
+        const zombie = this.enemies[enemyData.id];
+
+        if (!zombie) {
+          return;
+        }
+
+        zombie.updateFromServer(enemyData);
+      });
+
+      // ==========================
+      // REMOVE DEAD ZOMBIES
+      // ==========================
+
+      Object.keys(this.enemies).forEach((enemyId) => {
+        if (!serverEnemies[enemyId]) {
+          this.enemies[enemyId].destroy();
+          delete this.enemies[enemyId];
+        }
+      });
+    });
 
     socket.on("player respawned", (player) => {
       if (this.enemy && player.id !== socket.id) {
@@ -381,60 +481,188 @@ export class PvPScene extends Phaser.Scene {
       }
     });
     socket.on("player won", (player) => {
-      if (player.id === socket.id) {
-        console.log("YOU WON");
+      this.gameOver = true;
 
-        this.add
-          .text(
-            this.cameras.main.width / 2,
-            this.cameras.main.height / 2,
-            "PLAYER DISCONNECTED, YOU WON!",
-            {
-              fontSize: "64px",
-              color: "#ffffff",
-              fontStyle: "bold",
-            },
-          )
-          .setOrigin(0.5)
-          .setScrollFactor(0)
-          .setDepth(9999);
-      }
+      const resultText = player.id === socket.id ? "YOU WON!" : "YOU LOSE!";
+
+      console.log(resultText);
+
+      this.player.body.setVelocity(0, 0);
+
+      this.add
+        .text(
+          this.cameras.main.centerX,
+          this.cameras.main.centerY - 100,
+          resultText,
+          {
+            fontSize: "64px",
+            color: "#ffffff",
+            fontStyle: "bold",
+          },
+        )
+        .setOrigin(0.5)
+        .setScrollFactor(0)
+        .setDepth(9999);
+      const buttonX = this.cameras.main.centerX;
+      const buttonY = this.cameras.main.centerY + 100;
+
+      // shadow
+      const returnMenuShadow = this.add
+        .rectangle(buttonX + 4, buttonY + 4, 300, 70, 0x000000, 0.35)
+        .setScrollFactor(0)
+        .setDepth(9998);
+
+      // main button
+      const returnMenuBg = this.add
+        .rectangle(buttonX, buttonY, 300, 70, 0x2b2d42)
+        .setStrokeStyle(4, 0xf9c74f)
+        .setScrollFactor(0)
+        .setDepth(9999)
+        .setInteractive({ useHandCursor: true });
+
+      // text
+      const returnMenuText = this.add
+        .text(buttonX, buttonY, "RETURN TO MENU", {
+          fontSize: "28px",
+          color: "#ffffff",
+          fontStyle: "bold",
+        })
+        .setOrigin(0.5)
+        .setScrollFactor(0)
+        .setDepth(10000);
+
+      // hover effect
+      returnMenuBg.on("pointerover", () => {
+        returnMenuBg.setFillStyle(0x3a3d5c);
+        returnMenuBg.setStrokeStyle(4, 0xffd166);
+        returnMenuText.setScale(1.05);
+      });
+
+      returnMenuBg.on("pointerout", () => {
+        returnMenuBg.setFillStyle(0x2b2d42);
+        returnMenuBg.setStrokeStyle(4, 0xf9c74f);
+        returnMenuText.setScale(1);
+      });
+
+      // click effect
+      returnMenuBg.on("pointerdown", () => {
+        returnMenuBg.setFillStyle(0x1f2233);
+        returnMenuText.setScale(0.98);
+
+        this.time.delayedCall(100, () => {
+          socket.emit("leave game");
+
+          this.scene.start("MenuScene");
+        });
+      });
+    });
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      socket.off("current enemies");
+      socket.off("current players");
+      socket.off("new player");
+      socket.off("player movement");
+      socket.off("gem picked up");
+      socket.off("player health and damage");
+      socket.off("zombie damaged");
+      socket.off("player damaged");
+      socket.off("gem dropped");
+      socket.off("player died");
+      socket.off("enemy state");
+      socket.off("player respawned");
+      socket.off("player disconnected");
+      socket.off("player won");
     });
   }
-
   update() {
     const socket = this.game.socket;
+
+    if (this.gameOver) {
+      return;
+    }
+
     if (!this.player) {
       return;
     }
-    Object.values(this.enemies).forEach((enemy) => {
-      enemy.update();
-    });
 
+    // Update local player
     this.player.update();
+
+    // ==========================
+    // CHECK ATTACK BUTTONS ONCE
+    // ==========================
+
+    const mele1Pressed = Phaser.Input.Keyboard.JustDown(
+      this.player.inputKeys.mele,
+    );
+
+    const mele2Pressed = Phaser.Input.Keyboard.JustDown(
+      this.player.inputKeys.mele2,
+    );
+
+    // ==========================
+    // ATTACK OTHER PLAYER
+    // ==========================
+
     if (this.enemy) {
-      let aRange = Phaser.Math.Distance.Between(
+      const playerRange = Phaser.Math.Distance.Between(
         this.player.x,
         this.player.y,
         this.enemy.x,
         this.enemy.y,
       );
 
-      if (
-        aRange < 150 &&
-        Phaser.Input.Keyboard.JustDown(this.player.inputKeys.mele)
-      ) {
-        socket.emit("player attack");
+      if (playerRange < 150 && mele1Pressed) {
+        socket.emit("player attack", "mele1");
       }
-      if (
-        aRange < 150 &&
-        Phaser.Input.Keyboard.JustDown(this.player.inputKeys.mele2)
-      ) {
-        socket.emit("player attack");
+
+      if (playerRange < 150 && mele2Pressed) {
+        socket.emit("player attack", "mele2");
       }
     }
 
+    // ==========================
+    // ATTACK ZOMBIES
+    // ==========================
+
+    Object.values(this.enemies).forEach((zombie) => {
+      if (!zombie.active || zombie.health <= 0) return;
+
+      const zombieRange = Phaser.Math.Distance.Between(
+        this.player.x,
+        this.player.y,
+        zombie.x,
+        zombie.y,
+      );
+      const facingZombie =
+        (this.player.direction === "left" && zombie.x < this.player.x) ||
+        (this.player.direction === "right" && zombie.x > this.player.x);
+
+      if (zombieRange < 150 && facingZombie && mele1Pressed) {
+        socket.emit("zombie hit", {
+          roomCode: this.roomCode,
+          enemyId: zombie.id,
+        });
+      }
+      if (zombieRange < 150 && facingZombie && mele2Pressed) {
+        socket.emit("zombie hit", {
+          roomCode: this.roomCode,
+          enemyId: zombie.id,
+        });
+      }
+    });
+
+    // ==========================
+    // HEALTH BAR
+    // ==========================
+
+    this.healthbar.setPosition(this.player.x - 80, this.player.y - 120);
+
+    // ==========================
+    // SEND MOVEMENT
+    // ==========================
+
     let animation = null;
+
     if (this.player.anims.currentAnim) {
       animation = this.player.anims.currentAnim.key;
     }
@@ -447,6 +675,11 @@ export class PvPScene extends Phaser.Scene {
       flipX: this.player.flipX,
       animation: animation,
     });
+
+    // ==========================
+    // GEM POSITION
+    // ==========================
+
     if (this.player.hasGem) {
       this.playerGem.setPosition(this.player.x, this.player.y - 80);
     }
