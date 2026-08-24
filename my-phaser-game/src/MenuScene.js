@@ -159,9 +159,10 @@ export class MenuScene extends Phaser.Scene {
     roomInput.style.boxSizing = "border-box";
     roomInput.style.textAlign = "center";
 
-    const domInput = this.add.dom(width / 2, 280, roomInput);
+    const domInput = this.add.dom(width / 2, 280, roomInput).setOrigin(0.5);
 
     // CREATE BUTTON
+    this.game.socket.off("roomCreated");
 
     const confirmButton = this.add
       .rectangle(width / 2, 365, 220, 60, 0x28283d)
@@ -255,9 +256,11 @@ export class MenuScene extends Phaser.Scene {
     roomInput.style.boxSizing = "border-box";
     roomInput.style.textAlign = "center";
 
-    const domInput = this.add.dom(width / 2, 280, roomInput);
+    const domInput = this.add.dom(width / 2, 280, roomInput).setOrigin(0.5);
 
     // JOIN BUTTON
+    this.game.socket.off("roomJoined");
+    this.game.socket.off("startGame");
 
     const confirmButton = this.add
       .rectangle(width / 2, 365, 220, 60, 0x28283d)

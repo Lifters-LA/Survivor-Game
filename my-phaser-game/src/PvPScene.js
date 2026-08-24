@@ -13,6 +13,10 @@ export class PvPScene extends Phaser.Scene {
   }
 
   preload() {
+    //sound
+    this.load.audio("gameMusic", "./src/assets/zombie-castle.mp3");
+    this.load.audio("gemPickup", "./src/assets/gem.wav");
+
     // ============================
     // MAP
     // ============================
@@ -57,6 +61,19 @@ export class PvPScene extends Phaser.Scene {
     this.player = null;
     this.enemy = null;
 
+    this.music = this.sound.add("gameMusic", {
+      loop: true,
+      volume: 0.1,
+    });
+
+    this.music.play();
+    this.events.once("shutdown", () => {
+      if (this.music) {
+        this.music.stop();
+        this.music.destroy();
+        this.music = null;
+      }
+    });
     const socket = this.game.socket;
     console.log("CREATE IS RUNNING");
     // ============================
@@ -170,11 +187,11 @@ export class PvPScene extends Phaser.Scene {
       });
     });
 
-    this.leftPortal = this.physics.add.sprite(200, 1000, "items", 57);
+    this.leftPortal = this.physics.add.sprite(200, 1300, "items", 57);
     this.leftPortal.setScale(6);
     this.leftPortal.setDepth(900);
 
-    this.rightPortal = this.physics.add.sprite(3000, 1000, "items", 57);
+    this.rightPortal = this.physics.add.sprite(3000, 1300, "items", 57);
     this.rightPortal.setScale(6);
     this.rightPortal.setDepth(900);
 
@@ -330,6 +347,7 @@ export class PvPScene extends Phaser.Scene {
       if (player.id === socket.id) {
         this.player.hasGem = true;
         this.playerGem.setVisible(true);
+        this.sound.play("gemPickup");
 
         if (this.enemy) {
           this.enemy.hasGem = false;
@@ -468,9 +486,17 @@ export class PvPScene extends Phaser.Scene {
     });
 
     socket.on("player respawned", (player) => {
-      if (this.enemy && player.id !== socket.id) {
+      if (player.id === socket.id) {
+        this.player.setPosition(player.x, player.y);
+
+        this.player.setVisible(true);
+
+        this.player.body.enable = true;
+      } else if (this.enemy) {
         this.enemy.setPosition(player.x, player.y);
+
         this.enemy.setVisible(true);
+
         this.enemy.body.enable = true;
       }
     });

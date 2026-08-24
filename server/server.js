@@ -29,17 +29,14 @@ function createEnemies(roomCode) {
     enemy1: {
       id: "enemy1",
       roomCode,
-      x: 500,
-      y: 900,
+      x: 100,
+      y: 535,
       health: 3,
-
       animation: "idle",
       flipX: false,
-
       patrolDirection: 1,
-      patrolLeft: 300,
-      patrolRight: 700,
-
+      patrolLeft: 0,
+      patrolRight: 300,
       lastAttackTime: 0,
     },
 
@@ -47,16 +44,13 @@ function createEnemies(roomCode) {
       id: "enemy2",
       roomCode,
       x: 900,
-      y: 700,
+      y: 860,
       health: 3,
-
       animation: "idle",
       flipX: false,
-
       patrolDirection: 1,
       patrolLeft: 700,
       patrolRight: 1100,
-
       lastAttackTime: 0,
     },
 
@@ -64,16 +58,13 @@ function createEnemies(roomCode) {
       id: "enemy3",
       roomCode,
       x: 1300,
-      y: 1000,
+      y: 1230,
       health: 3,
-
       animation: "idle",
       flipX: false,
-
       patrolDirection: 1,
       patrolLeft: 1100,
       patrolRight: 1500,
-
       lastAttackTime: 0,
     },
 
@@ -81,16 +72,13 @@ function createEnemies(roomCode) {
       id: "enemy4",
       roomCode,
       x: 1800,
-      y: 800,
+      y: 1330,
       health: 3,
-
       animation: "idle",
       flipX: false,
-
       patrolDirection: 1,
       patrolLeft: 1600,
       patrolRight: 2000,
-
       lastAttackTime: 0,
     },
 
@@ -98,16 +86,13 @@ function createEnemies(roomCode) {
       id: "enemy5",
       roomCode,
       x: 2300,
-      y: 950,
+      y: 535,
       health: 3,
-
       animation: "idle",
       flipX: false,
-
       patrolDirection: 1,
       patrolLeft: 2100,
       patrolRight: 2500,
-
       lastAttackTime: 0,
     },
 
@@ -115,16 +100,69 @@ function createEnemies(roomCode) {
       id: "enemy6",
       roomCode,
       x: 2700,
-      y: 750,
+      y: 860,
       health: 3,
-
       animation: "idle",
       flipX: false,
-
       patrolDirection: 1,
       patrolLeft: 2500,
       patrolRight: 2900,
+      lastAttackTime: 0,
+    },
 
+    enemy7: {
+      id: "enemy7",
+      roomCode,
+      x: 1300,
+      y: 535,
+      health: 3,
+      animation: "idle",
+      flipX: false,
+      patrolDirection: 1,
+      patrolLeft: 1100,
+      patrolRight: 1500,
+      lastAttackTime: 0,
+    },
+
+    enemy8: {
+      id: "enemy8",
+      roomCode,
+      x: 1500,
+      y: 535,
+      health: 3,
+      animation: "idle",
+      flipX: false,
+      patrolDirection: 1,
+      patrolLeft: 1800,
+      patrolRight: 2200,
+      lastAttackTime: 0,
+    },
+
+    enemy9: {
+      id: "enemy9",
+      roomCode,
+      x: 1400,
+      y: 65,
+      health: 3,
+      animation: "idle",
+      flipX: false,
+      patrolDirection: 1,
+      patrolLeft: 1200,
+      patrolRight: 1600,
+      lastAttackTime: 0,
+    },
+
+    enemy10: {
+      id: "enemy10",
+      roomCode,
+      x: 2000,
+      y: 65,
+      health: 3,
+      animation: "idle",
+      flipX: false,
+      patrolDirection: 1,
+      patrolLeft: 2300,
+      patrolRight: 2700,
       lastAttackTime: 0,
     },
   };
@@ -323,6 +361,8 @@ io.on("connection", (socket) => {
         id: player1.id,
         roomCode,
         side: "left",
+        respawnX: 3000,
+        respawnY: 150,
         x: 180,
         y: 1000,
         health: 100,
@@ -333,6 +373,8 @@ io.on("connection", (socket) => {
         id: player2.id,
         roomCode,
         side: "right",
+        respawnX: 200,
+        respawnY: 150,
         x: 3000,
         y: 1000,
         health: 100,
@@ -459,8 +501,8 @@ io.on("connection", (socket) => {
     player.health = 100;
 
     // Spawn depending on which side this player originally belongs to
-    player.x = player.x <= 290 ? 180 : 400;
-    player.y = 200;
+    player.x = player.respawnX;
+    player.y = player.respawnY;
 
     socket.emit("player health and damage", {
       id: socket.id,
@@ -607,6 +649,12 @@ io.on("connection", (socket) => {
       io.to(roomCode).emit("player disconnected", {
         id: socket.id,
       });
+      if (remainingPlayers.length === 0) {
+        delete gems[roomCode];
+        delete enemies[roomCode];
+
+        console.log("Room data deleted:", roomCode);
+      }
 
       if (remainingPlayers.length === 1) {
         io.to(remainingPlayers[0].id).emit("player won", {
@@ -650,6 +698,8 @@ io.on("connection", (socket) => {
     players[socket.id] = {
       id: socket.id,
       roomCode,
+      respawnX: 3000,
+      respawnY: 150,
       x: 400,
       y: 200,
       health: 100,
@@ -678,6 +728,8 @@ io.on("connection", (socket) => {
     players[socket.id] = {
       id: socket.id,
       roomCode,
+      respawnX: 200,
+      respawnY: 150,
       x: 180,
       y: 200,
       health: 100,

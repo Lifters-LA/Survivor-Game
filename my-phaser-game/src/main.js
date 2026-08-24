@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import { MenuScene } from "./MenuScene.js";
 import { LobbyScene } from "./lobbyScene.js";
 import { io } from "socket.io-client";
+import "./style.css";
 
 const socket = io("http://localhost:3000");
 
