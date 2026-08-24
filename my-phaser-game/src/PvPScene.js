@@ -177,6 +177,7 @@ export class PvPScene extends Phaser.Scene {
           this.player = new Player(this, player.x, player.y, "wknight");
           this.player.hasGem = false;
           this.player.side = player.side;
+          this.player.shieldHealth = 100;
 
           console.log("created at:", this.player.x, this.player.y);
 
@@ -315,6 +316,7 @@ export class PvPScene extends Phaser.Scene {
     socket.on("player health and damage", (player) => {
       if (player.id === socket.id) {
         this.healthbar.setHealth(player.health);
+        this.player.shieldHealth = player.shieldHealth;
 
         if (player.health <= 0) {
           if (this.player.hasGem) {
@@ -466,6 +468,17 @@ export class PvPScene extends Phaser.Scene {
     }
 
     this.player.update();
+
+    const shielding =
+      this.player.inputKeys.down.isDown && this.player.shieldHealth > 0;
+
+    if (shielding) {
+      this.player.setTint(0x0000ff);
+    } else {
+      this.player.clearTint();
+    }
+
+    socket.emit("player shielding", shielding);
 
     this.healthbar.setPosition(this.player.x - 80, this.player.y - 120);
 
