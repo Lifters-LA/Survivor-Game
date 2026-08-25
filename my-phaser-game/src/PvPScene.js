@@ -14,46 +14,46 @@ export class PvPScene extends Phaser.Scene {
 
   preload() {
     //sound
-    this.load.audio("gameMusic", "/assets/zombie-castle.mp3");
-    this.load.audio("gemPickup", "/assets/gem.wav");
+    this.load.audio("gameMusic", "assets/zombie-castle.mp3");
+    this.load.audio("gemPickup", "assets/gem.wav");
 
     // ============================
     // MAP
     // ============================
 
-    this.load.tilemapTiledJSON("map", "/maps/map.json");
+    this.load.tilemapTiledJSON("map", "maps/map.json");
 
     // ============================
     // TILESET IMAGES
     // ============================
 
-    this.load.image("dungeonTiles", "/maps/Dungeon Tile Set (1).png");
+    this.load.image("dungeonTiles", "maps/Dungeon Tile Set (1).png");
 
-    this.load.image("saltTiles", "/maps/Salt.png");
+    this.load.image("saltTiles", "maps/Salt.png");
 
-    this.load.image("backgroundTiles", "/maps/Background_0.png");
+    this.load.image("backgroundTiles", "maps/Background_0.png");
 
-    this.load.image("grassBackgroundTiles", "/maps/Grass_background_2.png");
+    this.load.image("grassBackgroundTiles", "maps/Grass_background_2.png");
     //////////////////////////////////////////////////////////
-    this.load.spritesheet("items", "/assets/items.png", {
+    this.load.spritesheet("items", "assets/items.png", {
       frameWidth: 32,
       frameHeight: 32,
     });
-    this.load.image("player", "/assets/wknight.png");
-    this.load.image("enemy", "/assets/brzombie.png");
+    this.load.image("player", "assets/wknight.png");
+    this.load.image("enemy", "assets/brzombie.png");
 
     this.load.atlas(
       "wknight",
-      "/assets/wknight.png",
-      "/assets/wknight_atlas.json",
+      "assets/wknight.png",
+      "assets/wknight_atlas.json",
     );
     this.load.atlas(
       "brzombie",
-      "/assets/brzombie.png",
-      "/assets/brzombie_atlas.json",
+      "assets/brzombie.png",
+      "assets/brzombie_atlas.json",
     );
-    this.load.animation("wknight_anim", "/assets/wknight_anim.json");
-    this.load.animation("brzombie_anim", "/assets/brzombie_anim.json");
+    this.load.animation("wknight_anim", "assets/wknight_anim.json");
+    this.load.animation("brzombie_anim", "assets/brzombie_anim.json");
   }
 
   create() {
