@@ -677,13 +677,13 @@ export class PvPScene extends Phaser.Scene {
         (this.player.direction === "left" && zombie.x < this.player.x) ||
         (this.player.direction === "right" && zombie.x > this.player.x);
 
-      if (zombieRange < 150 && facingZombie && mele1Pressed) {
+      if (zombieRange < 150 && mele1Pressed) {
         socket.emit("zombie hit", {
           roomCode: this.roomCode,
           enemyId: zombie.id,
         });
       }
-      if (zombieRange < 150 && facingZombie && mele2Pressed) {
+      if (zombieRange < 150 && mele2Pressed) {
         socket.emit("zombie hit", {
           roomCode: this.roomCode,
           enemyId: zombie.id,

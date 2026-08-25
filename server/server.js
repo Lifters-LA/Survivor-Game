@@ -1,9 +1,6 @@
 import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
-import db from "./db/client.js";
-import seed from "./db/seed.js";
-import commonRouter from "./api/commonapi.js";
 
 const app = express();
 //server creation
@@ -16,8 +13,6 @@ const io = new Server(server, {
 });
 
 app.use(express.json());
-
-app.use("/api", commonRouter);
 
 const waitingList = [];
 const players = {};
@@ -309,10 +304,18 @@ function zombieAttack(enemy, target, roomCode) {
 
   enemy.lastAttackTime = now;
 
-  target.health -= ZOMBIE_DAMAGE;
+  if (target.shielding && target.shieldHealth > 0) {
+    target.shieldHealth -= ZOMBIE_DAMAGE;
 
-  if (target.health < 0) {
-    target.health = 0;
+    if (target.shieldHealth < 0) {
+      target.shieldHealth = 0;
+    }
+  } else {
+    target.health -= ZOMBIE_DAMAGE;
+
+    if (target.health < 0) {
+      target.health = 0;
+    }
   }
 
   console.log(enemy.id, "attacked", target.id, "health:", target.health);
@@ -320,6 +323,7 @@ function zombieAttack(enemy, target, roomCode) {
   io.to(target.id).emit("player health and damage", {
     id: target.id,
     health: target.health,
+    shieldHealth: target.shieldHealth,
   });
 
   io.to(roomCode).emit("player damaged", {
@@ -366,6 +370,8 @@ io.on("connection", (socket) => {
         x: 180,
         y: 1000,
         health: 100,
+        shieldHealth: 100,
+        shielding: false,
       };
 
       // PLAYER 2 - RIGHT
@@ -378,6 +384,8 @@ io.on("connection", (socket) => {
         x: 3000,
         y: 1000,
         health: 100,
+        shieldHealth: 100,
+        shielding: false,
       };
 
       io.to(roomCode).emit("joinedOnline", roomCode);
@@ -447,6 +455,16 @@ io.on("connection", (socket) => {
     });
   });
 
+  socket.on("player shielding", (shielding) => {
+    const player = players[socket.id];
+
+    if (!player) {
+      return;
+    }
+
+    player.shielding = shielding;
+  });
+
   // ATTACK
   socket.on("player attack", (attack) => {
     const attacker = players[socket.id];
@@ -462,21 +480,35 @@ io.on("connection", (socket) => {
     if (!target) {
       return;
     }
+
+    let damage = 0;
+
     if (attack === "mele1") {
-      target.health -= 25;
+      damage = 25;
     }
 
     if (attack === "mele2") {
-      target.health -= 50;
+      damage = 50;
     }
 
-    if (target.health <= 0) {
-      target.health = 0;
+    if (target.shielding && target.shieldHealth > 0) {
+      target.shieldHealth -= damage;
+
+      if (target.shieldHealth < 0) {
+        target.shieldHealth = 0;
+      }
+    } else {
+      target.health -= damage;
+
+      if (target.health < 0) {
+        target.health = 0;
+      }
     }
 
     io.to(target.id).emit("player health and damage", {
       id: target.id,
       health: target.health,
+      shieldHealth: target.shieldHealth,
     });
 
     io.to(attacker.roomCode).emit("player damaged", {
@@ -499,6 +531,8 @@ io.on("connection", (socket) => {
     }
 
     player.health = 100;
+    player.shieldHealth = 100;
+    player.shielding = false;
 
     // Spawn depending on which side this player originally belongs to
     player.x = player.respawnX;
@@ -507,6 +541,7 @@ io.on("connection", (socket) => {
     socket.emit("player health and damage", {
       id: socket.id,
       health: 100,
+      shieldHealth: 100,
     });
 
     io.to(player.roomCode).emit("player respawned", {
@@ -703,6 +738,8 @@ io.on("connection", (socket) => {
       x: 400,
       y: 200,
       health: 100,
+      shieldHealth: 100,
+      shielding: false,
     };
 
     socket.emit("roomJoined", roomCode);
@@ -733,6 +770,8 @@ io.on("connection", (socket) => {
       x: 180,
       y: 200,
       health: 100,
+      shieldHealth: 100,
+      shielding: false,
     };
 
     socket.emit("roomCreated", roomCode);
@@ -750,15 +789,12 @@ setInterval(() => {
   });
 }, 20);
 
-const init = async () => {
-  await db.connect();
-  await seed();
+const init = () => {
   const PORT = 3000;
   server.listen(PORT, () => {
     console.log(`listening to port... ${PORT}`);
   });
 };
-
 init();
 
 app.use((err, req, res, next) => {

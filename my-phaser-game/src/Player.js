@@ -11,6 +11,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.maxShieldHealth = 2000;
     this.shieldHealth = this.maximumHealth;
     this.hasGem = false;
+    this.direction = null;
   }
 
   update() {
@@ -38,7 +39,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
       if (this.inputKeys.left.isDown) {
         this.setVelocityX(-this.speed);
-        this.direction = "left";
+        direction = "left";
 
         if (!attacking) {
           const charAnimation = this.anims.play("w_knight_walk", true);
@@ -49,7 +50,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       }
       if (this.inputKeys.right.isDown) {
         this.setVelocityX(this.speed);
-        this.direction = "right";
+        direction = "right";
         if (!attacking) {
           const charAnimation = this.anims.play("w_knight_walk", true);
           charAnimation.setFlipX(true);
