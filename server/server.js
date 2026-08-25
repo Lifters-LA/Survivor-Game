@@ -18,6 +18,9 @@ const waitingList = [];
 const players = {};
 const gems = {};
 const enemies = {};
+app.get("/", (req, res) => {
+  res.send("Survivor Game server is running");
+});
 
 function createEnemies(roomCode) {
   enemies[roomCode] = {
