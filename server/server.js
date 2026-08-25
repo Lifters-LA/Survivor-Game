@@ -1,9 +1,6 @@
 import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
-import db from "./db/client.js";
-import seed from "./db/seed.js";
-import commonRouter from "./api/commonapi.js";
 
 const app = express();
 //server creation
@@ -17,55 +14,437 @@ const io = new Server(server, {
 
 app.use(express.json());
 
-app.use("/api", commonRouter);
-
+const waitingList = [];
 const players = {};
-let playerCount = 0;
-io.on("connection", (socket) => {
-  if (playerCount >= 2) {
-    socket.disconnect();
+const gems = {};
+const enemies = {};
+
+function createEnemies(roomCode) {
+  enemies[roomCode] = {
+    enemy1: {
+      id: "enemy1",
+      roomCode,
+      x: 100,
+      y: 535,
+      health: 3,
+      animation: "idle",
+      flipX: false,
+      patrolDirection: 1,
+      patrolLeft: 300,
+      patrolRight: 550,
+      lastAttackTime: 0,
+    },
+
+    enemy2: {
+      id: "enemy2",
+      roomCode,
+      x: 850,
+      y: 860,
+      health: 3,
+      animation: "idle",
+      flipX: false,
+      patrolDirection: 1,
+      patrolLeft: 900,
+      patrolRight: 1200,
+      lastAttackTime: 0,
+    },
+
+    enemy3: {
+      id: "enemy3",
+      roomCode,
+      x: 1300,
+      y: 1230,
+      health: 3,
+      animation: "idle",
+      flipX: false,
+      patrolDirection: 1,
+      patrolLeft: 1180,
+      patrolRight: 1490,
+      lastAttackTime: 0,
+    },
+
+    enemy4: {
+      id: "enemy4",
+      roomCode,
+      x: 1800,
+      y: 1330,
+      health: 3,
+      animation: "idle",
+      flipX: false,
+      patrolDirection: 1,
+      patrolLeft: 1600,
+      patrolRight: 2100,
+      lastAttackTime: 0,
+    },
+
+    enemy5: {
+      id: "enemy5",
+      roomCode,
+      x: 2300,
+      y: 535,
+      health: 3,
+      animation: "idle",
+      flipX: false,
+      patrolDirection: 1,
+      patrolLeft: 2300,
+      patrolRight: 2630,
+      lastAttackTime: 0,
+    },
+
+    enemy6: {
+      id: "enemy6",
+      roomCode,
+      x: 2700,
+      y: 860,
+      health: 3,
+      animation: "idle",
+      flipX: false,
+      patrolDirection: 1,
+      patrolLeft: 2500,
+      patrolRight: 2900,
+      lastAttackTime: 0,
+    },
+
+    enemy7: {
+      id: "enemy7",
+      roomCode,
+      x: 1380,
+      y: 535,
+      health: 3,
+      animation: "idle",
+      flipX: false,
+      patrolDirection: 1,
+      patrolLeft: 1380,
+      patrolRight: 1500,
+      lastAttackTime: 0,
+    },
+
+    enemy8: {
+      id: "enemy8",
+      roomCode,
+      x: 1700,
+      y: 535,
+      health: 3,
+      animation: "idle",
+      flipX: false,
+      patrolDirection: 1,
+      patrolLeft: 1680,
+      patrolRight: 1800,
+      lastAttackTime: 0,
+    },
+
+    enemy9: {
+      id: "enemy9",
+      roomCode,
+      x: 1400,
+      y: 65,
+      health: 3,
+      animation: "idle",
+      flipX: false,
+      patrolDirection: 1,
+      patrolLeft: 1100,
+      patrolRight: 1500,
+      lastAttackTime: 0,
+    },
+
+    enemy10: {
+      id: "enemy10",
+      roomCode,
+      x: 2000,
+      y: 65,
+      health: 3,
+      animation: "idle",
+      flipX: false,
+      patrolDirection: 1,
+      patrolLeft: 1800,
+      patrolRight: 2180,
+      lastAttackTime: 0,
+    },
+  };
+}
+const ZOMBIE_PATROL_SPEED = 2;
+const ZOMBIE_SPEED = 4;
+const ZOMBIE_CHASE_RANGE = 300;
+const ZOMBIE_ATTACK_RANGE = 90;
+const ZOMBIE_DAMAGE = 10;
+const ZOMBIE_ATTACK_COOLDOWN = 1000;
+const ZOMBIE_GEM_SPEED = 6;
+
+function getRoomPlayers(roomCode) {
+  return Object.values(players).filter((player) => {
+    return player.roomCode === roomCode;
+  });
+}
+
+function patrolZombie(enemy) {
+  enemy.animation = "walk";
+
+  enemy.x += ZOMBIE_PATROL_SPEED * enemy.patrolDirection;
+
+  // Moving right
+  if (enemy.patrolDirection === 1) {
+    enemy.flipX = true;
+  } else {
+    enemy.flipX = false;
+  }
+
+  if (enemy.x >= enemy.patrolRight) {
+    enemy.x = enemy.patrolRight;
+    enemy.patrolDirection = -1;
+  }
+
+  if (enemy.x <= enemy.patrolLeft) {
+    enemy.x = enemy.patrolLeft;
+    enemy.patrolDirection = 1;
+  }
+}
+function updateZombie(enemy, roomCode) {
+  const roomPlayers = getRoomPlayers(roomCode);
+
+  const gem = gems[roomCode];
+
+  let target = null;
+  let currentSpeed = ZOMBIE_SPEED;
+
+  if (gem && gem.ownerId) {
+    currentSpeed = ZOMBIE_GEM_SPEED;
+  }
+
+  // =====================================
+  // GEM HOLDER ALWAYS GETS TARGETED
+  // =====================================
+
+  if (gem && gem.ownerId) {
+    const gemHolder = players[gem.ownerId];
+
+    if (gemHolder && gemHolder.health > 0) {
+      target = gemHolder;
+    }
+  }
+
+  // =====================================
+  // NO GEM HOLDER
+  // FIND CLOSEST PLAYER IN RANGE
+  // =====================================
+
+  if (!target) {
+    let closestPlayer = null;
+    let closestDistance = Infinity;
+
+    roomPlayers.forEach((player) => {
+      if (player.health <= 0) {
+        return;
+      }
+
+      const dx = player.x - enemy.x;
+      const dy = player.y - enemy.y;
+
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < ZOMBIE_CHASE_RANGE && distance < closestDistance) {
+        closestDistance = distance;
+        closestPlayer = player;
+      }
+    });
+
+    target = closestPlayer;
+  }
+
+  // =====================================
+  // NOBODY TO CHASE
+  // =====================================
+
+  if (!target) {
+    patrolZombie(enemy);
     return;
   }
-  playerCount++;
-  let spawnX = 180;
-  if (playerCount === 2) {
-    spawnX = 400;
+
+  // =====================================
+  // CHASE TARGET
+  // =====================================
+
+  const dx = target.x - enemy.x;
+  const dy = target.y - enemy.y;
+
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  if (distance <= ZOMBIE_ATTACK_RANGE) {
+    enemy.animation = "attack";
+
+    zombieAttack(enemy, target, roomCode);
+
+    return;
   }
 
-  players[socket.id] = {
-    id: socket.id,
-    x: spawnX,
-    y: 200,
-    health: 100,
-  };
-  console.log("Players:", players);
-  console.log("Player connected", socket.id);
-  socket.emit("current players", players);
-  socket.emit("player health and damage", {
-    id: socket.id,
-    health: players[socket.id].health,
-  });
-  socket.broadcast.emit("new player", players[socket.id]);
+  if (distance === 0) {
+    return;
+  }
 
-  socket.on("disconnect", () => {
-    playerCount--;
-    delete players[socket.id];
-    console.log("Players:", players);
-    console.log("Player disconnected", socket.id);
-    io.emit("player disconnected", {
-      id: socket.id,
+  enemy.animation = "walk";
+
+  const normalizedX = dx / distance;
+  const normalizedY = dy / distance;
+
+  enemy.x += normalizedX * currentSpeed;
+  enemy.y += normalizedY * currentSpeed;
+
+  if (dx > 0) {
+    enemy.flipX = true;
+  } else {
+    enemy.flipX = false;
+  }
+}
+
+function zombieAttack(enemy, target, roomCode) {
+  const now = Date.now();
+
+  // stop zombie from damaging every 20ms
+  if (now - enemy.lastAttackTime < ZOMBIE_ATTACK_COOLDOWN) {
+    return;
+  }
+
+  enemy.lastAttackTime = now;
+
+  if (target.shielding && target.shieldHealth > 0) {
+    target.shieldHealth -= ZOMBIE_DAMAGE;
+
+    if (target.shieldHealth < 0) {
+      target.shieldHealth = 0;
+    }
+  } else {
+    target.health -= ZOMBIE_DAMAGE;
+
+    if (target.health < 0) {
+      target.health = 0;
+    }
+  }
+
+  console.log(enemy.id, "attacked", target.id, "health:", target.health);
+
+  io.to(target.id).emit("player health and damage", {
+    id: target.id,
+    health: target.health,
+    shieldHealth: target.shieldHealth,
+  });
+
+  io.to(roomCode).emit("player damaged", {
+    id: target.id,
+  });
+
+  if (target.health <= 0) {
+    io.to(roomCode).emit("player died", {
+      id: target.id,
     });
+  }
+}
+
+io.on("connection", (socket) => {
+  console.log("socket connected:", socket.id);
+
+  socket.on("online", () => {
+    console.log("waiting to get connected:", socket.id);
+
+    waitingList.push(socket);
+
+    if (waitingList.length >= 2) {
+      const player1 = waitingList.shift();
+      const player2 = waitingList.shift();
+
+      const roomCode = String(Date.now());
+      createEnemies(roomCode);
+
+      player1.join(roomCode);
+      player2.join(roomCode);
+      gems[roomCode] = {
+        ownerId: null,
+        x: 500,
+        y: 300,
+      };
+
+      // PLAYER 1 - LEFT
+      players[player1.id] = {
+        id: player1.id,
+        roomCode,
+        side: "left",
+        respawnX: 3000,
+        respawnY: 150,
+        x: 180,
+        y: 1000,
+        health: 100,
+        shieldHealth: 100,
+        shielding: false,
+      };
+
+      // PLAYER 2 - RIGHT
+      players[player2.id] = {
+        id: player2.id,
+        roomCode,
+        side: "right",
+        respawnX: 200,
+        respawnY: 150,
+        x: 3000,
+        y: 1000,
+        health: 100,
+        shieldHealth: 100,
+        shielding: false,
+      };
+
+      io.to(roomCode).emit("joinedOnline", roomCode);
+    }
+  });
+  socket.on("zombie hit", ({ roomCode, enemyId }) => {
+    const roomEnemies = enemies[roomCode];
+
+    if (!roomEnemies) {
+      return;
+    }
+
+    const enemy = roomEnemies[enemyId];
+
+    if (!enemy) {
+      return;
+    }
+
+    enemy.health -= 1;
+
+    console.log(enemyId, "health:", enemy.health);
+    io.to(roomCode).emit("zombie damaged", {
+      enemyId: enemy.id,
+    });
+
+    if (enemy.health <= 0) {
+      delete roomEnemies[enemyId];
+    }
+
+    io.to(roomCode).emit("enemy state", roomEnemies);
+  });
+  socket.on("getCurrentPlayers", (roomCode) => {
+    const roomPlayers = {};
+
+    Object.values(players).forEach((player) => {
+      if (player.roomCode === roomCode) {
+        roomPlayers[player.id] = player;
+      }
+    });
+
+    socket.emit("current players", roomPlayers);
   });
 
+  // MOVEMENT
   socket.on("player movement", (position) => {
-    players[socket.id].x = position.x;
-    players[socket.id].y = position.y;
-    players[socket.id].velocityX = position.velocityX;
-    players[socket.id].velocityY = position.velocityY;
-    players[socket.id].animation = position.animation;
-    players[socket.id].flipX = position.flipX;
+    const player = players[socket.id];
 
-    socket.broadcast.emit("player movement", {
+    if (!player) {
+      return;
+    }
+
+    player.x = position.x;
+    player.y = position.y;
+    player.velocityX = position.velocityX;
+    player.velocityY = position.velocityY;
+    player.animation = position.animation;
+    player.flipX = position.flipX;
+
+    socket.to(player.roomCode).emit("player movement", {
       id: socket.id,
       x: position.x,
       y: position.y,
@@ -75,62 +454,347 @@ io.on("connection", (socket) => {
       flipX: position.flipX,
     });
   });
-  socket.on("player attack", () => {
-    console.log("player attacked", socket.id);
-    const allPlayers = Object.values(players);
-    const target = allPlayers.find((player) => {
-      return player.id !== socket.id;
+
+  socket.on("player shielding", (shielding) => {
+    const player = players[socket.id];
+
+    if (!player) {
+      return;
+    }
+
+    player.shielding = shielding;
+  });
+
+  // ATTACK
+  socket.on("player attack", (attack) => {
+    const attacker = players[socket.id];
+
+    if (!attacker) {
+      return;
+    }
+
+    const target = Object.values(players).find((player) => {
+      return player.roomCode === attacker.roomCode && player.id !== socket.id;
     });
+
     if (!target) {
       return;
     }
-    target.health -= 50;
-    if (target.health <= 0) {
-      target.health = 0;
+
+    let damage = 0;
+
+    if (attack === "mele1") {
+      damage = 25;
+    }
+
+    if (attack === "mele2") {
+      damage = 50;
+    }
+
+    if (target.shielding && target.shieldHealth > 0) {
+      target.shieldHealth -= damage;
+
+      if (target.shieldHealth < 0) {
+        target.shieldHealth = 0;
+      }
+    } else {
+      target.health -= damage;
+
+      if (target.health < 0) {
+        target.health = 0;
+      }
     }
 
     io.to(target.id).emit("player health and damage", {
       id: target.id,
       health: target.health,
+      shieldHealth: target.shieldHealth,
     });
 
-    io.emit("player damaged", {
+    io.to(attacker.roomCode).emit("player damaged", {
       id: target.id,
     });
 
     if (target.health <= 0) {
-      io.emit("player died", {
+      io.to(attacker.roomCode).emit("player died", {
         id: target.id,
       });
     }
   });
 
+  // RESPAWN
   socket.on("player respawn", () => {
-    players[socket.id].health = 100;
-    players[socket.id].x = 400;
-    players[socket.id].y = 350;
+    const player = players[socket.id];
+
+    if (!player) {
+      return;
+    }
+
+    player.health = 100;
+    player.shieldHealth = 100;
+    player.shielding = false;
+
+    // Spawn depending on which side this player originally belongs to
+    player.x = player.respawnX;
+    player.y = player.respawnY;
 
     socket.emit("player health and damage", {
       id: socket.id,
       health: 100,
+      shieldHealth: 100,
     });
-    io.emit("player respawned", {
+
+    io.to(player.roomCode).emit("player respawned", {
       id: socket.id,
-      x: players[socket.id].x,
-      y: players[socket.id].y,
+      x: player.x,
+      y: player.y,
     });
   });
+
+  socket.on("gem picked up", ({ roomCode }) => {
+    const player = players[socket.id];
+
+    if (!player) {
+      return;
+    }
+
+    const gem = gems[roomCode];
+
+    if (!gem) {
+      return;
+    }
+
+    // Someone already has the gem
+    if (gem.ownerId !== null) {
+      return;
+    }
+
+    // Make sure this player actually belongs to this room
+    if (player.roomCode !== roomCode) {
+      return;
+    }
+
+    gem.ownerId = socket.id;
+
+    io.to(roomCode).emit("gem picked up", {
+      id: socket.id,
+    });
+  });
+
+  socket.on("gem dropped", ({ roomCode, x, y }) => {
+    const player = players[socket.id];
+
+    if (!player) {
+      return;
+    }
+
+    const gem = gems[roomCode];
+
+    if (!gem) {
+      return;
+    }
+
+    // Only the player carrying the gem can drop it
+    if (gem.ownerId !== socket.id) {
+      return;
+    }
+
+    gem.ownerId = null;
+    gem.x = x;
+    gem.y = y;
+
+    io.to(roomCode).emit("gem dropped", {
+      x,
+      y,
+    });
+  });
+  socket.on("getCurrentEnemies", (roomCode) => {
+    socket.emit("current enemies", enemies[roomCode]);
+  });
+
+  socket.on("player won", ({ roomCode }) => {
+    const player = players[socket.id];
+
+    if (!player) {
+      return;
+    }
+
+    if (player.roomCode !== roomCode) {
+      return;
+    }
+
+    const gem = gems[roomCode];
+
+    if (!gem) {
+      return;
+    }
+
+    // Player must actually be carrying the gem
+    if (gem.ownerId !== socket.id) {
+      return;
+    }
+
+    io.to(roomCode).emit("player won", {
+      id: socket.id,
+    });
+  });
+
+  socket.on("leave game", () => {
+    const player = players[socket.id];
+
+    if (!player) {
+      return;
+    }
+
+    const roomCode = player.roomCode;
+
+    // Remove player from server game state
+    delete players[socket.id];
+
+    // Leave the Socket.IO room
+    socket.leave(roomCode);
+
+    console.log(socket.id, "left room", roomCode);
+  });
+  // DISCONNECT
+  socket.on("disconnect", () => {
+    const player = players[socket.id];
+
+    if (player) {
+      const roomCode = player.roomCode;
+      const gem = gems[roomCode];
+
+      if (gem && gem.ownerId === socket.id) {
+        gem.ownerId = null;
+        gem.x = player.x;
+        gem.y = player.y;
+
+        io.to(roomCode).emit("gem dropped", {
+          x: player.x,
+          y: player.y,
+        });
+      }
+
+      delete players[socket.id];
+
+      const remainingPlayers = Object.values(players).filter((p) => {
+        return p.roomCode === roomCode;
+      });
+
+      io.to(roomCode).emit("player disconnected", {
+        id: socket.id,
+      });
+      if (remainingPlayers.length === 0) {
+        delete gems[roomCode];
+        delete enemies[roomCode];
+
+        console.log("Room data deleted:", roomCode);
+      }
+
+      if (remainingPlayers.length === 1) {
+        io.to(remainingPlayers[0].id).emit("player won", {
+          id: remainingPlayers[0].id,
+        });
+      }
+    }
+
+    const waitingIndex = waitingList.findIndex(
+      (waitingSocket) => waitingSocket.id === socket.id,
+    );
+
+    if (waitingIndex !== -1) {
+      waitingList.splice(waitingIndex, 1);
+    }
+
+    console.log("socket disconnected:", socket.id);
+  });
+
+  /////////////////////////////////////////////////////////////////////////////////////////
+  socket.on("joinRoom", (roomCode) => {
+    const room = io.sockets.adapter.rooms.get(roomCode);
+
+    if (!room) {
+      socket.emit("roomError", "Room does not exist");
+      return;
+    }
+
+    if (room.size >= 2) {
+      socket.emit("roomError", "Room full");
+      return;
+    }
+
+    socket.join(roomCode);
+    gems[roomCode] = {
+      ownerId: null,
+      x: 500,
+      y: 300,
+    };
+
+    players[socket.id] = {
+      id: socket.id,
+      roomCode,
+      respawnX: 3000,
+      respawnY: 150,
+      x: 400,
+      y: 200,
+      health: 100,
+      shieldHealth: 100,
+      shielding: false,
+    };
+
+    socket.emit("roomJoined", roomCode);
+
+    const updatedRoom = io.sockets.adapter.rooms.get(roomCode);
+
+    if (updatedRoom.size === 2) {
+      io.to(roomCode).emit("startGame", roomCode);
+    }
+  });
+
+  socket.on("createRoom", (roomCode) => {
+    const room = io.sockets.adapter.rooms.get(roomCode);
+
+    if (room) {
+      socket.emit("roomError", "Room already exists");
+      return;
+    }
+    createEnemies(roomCode);
+
+    socket.join(roomCode);
+
+    players[socket.id] = {
+      id: socket.id,
+      roomCode,
+      respawnX: 200,
+      respawnY: 150,
+      x: 180,
+      y: 200,
+      health: 100,
+      shieldHealth: 100,
+      shielding: false,
+    };
+
+    socket.emit("roomCreated", roomCode);
+  });
+  //////////////////////////////////////////////////
 });
 
-const init = async () => {
-  await db.connect();
-  await seed();
+setInterval(() => {
+  Object.entries(enemies).forEach(([roomCode, roomEnemies]) => {
+    Object.values(roomEnemies).forEach((enemy) => {
+      updateZombie(enemy, roomCode);
+    });
+
+    io.to(roomCode).emit("enemy state", roomEnemies);
+  });
+}, 20);
+
+const init = () => {
   const PORT = 3000;
   server.listen(PORT, () => {
     console.log(`listening to port... ${PORT}`);
   });
 };
-
 init();
 
 app.use((err, req, res, next) => {
