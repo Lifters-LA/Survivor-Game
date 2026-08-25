@@ -4,7 +4,11 @@ import { LobbyScene } from "./lobbyScene.js";
 import { io } from "socket.io-client";
 import "./style.css";
 
-const socket = io("http://localhost:3000");
+const socket = io(
+  import.meta.env.DEV
+    ? "http://localhost:3000"
+    : "https://survivor-game-mx9w.onrender.com",
+);
 
 import { PvPScene } from "./PvPScene.js";
 const config = {
