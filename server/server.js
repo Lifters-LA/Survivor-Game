@@ -11,7 +11,7 @@ const io = new Server(server, {
     origin: [
       "http://localhost:5173",
       "http://localhost:4173",
-      "https://jearonajaromal.itch.io/survivor-game",
+      "https://html-classic.itch.zone",
     ],
   },
 });
