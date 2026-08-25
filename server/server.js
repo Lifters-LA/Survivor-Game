@@ -8,7 +8,7 @@ const server = createServer(app);
 const io = new Server(server, {
   connectionStateRecovery: {},
   cors: {
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://localhost:4173"],
   },
 });
 
@@ -790,7 +790,7 @@ setInterval(() => {
 }, 20);
 
 const init = () => {
-  const PORT = 3000;
+  const PORT = process.env.PORT || 3000;
   server.listen(PORT, () => {
     console.log(`listening to port... ${PORT}`);
   });
