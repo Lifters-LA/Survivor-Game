@@ -398,6 +398,76 @@ io.on("connection", (socket) => {
       io.to(roomCode).emit("joinedOnline", roomCode);
     }
   });
+
+  socket.on("joinRoom", (roomCode) => {
+    const room = io.sockets.adapter.rooms.get(roomCode);
+
+    if (!room) {
+      socket.emit("roomError", "Room does not exist");
+      return;
+    }
+
+    if (room.size >= 2) {
+      socket.emit("roomError", "Room full");
+      return;
+    }
+
+    socket.join(roomCode);
+    gems[roomCode] = {
+      ownerId: null,
+      x: 500,
+      y: 300,
+    };
+
+    players[socket.id] = {
+      id: socket.id,
+      roomCode,
+      respawnX: 200,
+      respawnY: 150,
+      side: "right",
+      x: 3000,
+      y: 1000,
+      health: 100,
+      shieldHealth: 100,
+      shielding: false,
+    };
+
+    socket.emit("roomJoined", roomCode);
+
+    const updatedRoom = io.sockets.adapter.rooms.get(roomCode);
+
+    if (updatedRoom.size === 2) {
+      io.to(roomCode).emit("startGame", roomCode);
+    }
+  });
+
+  socket.on("createRoom", (roomCode) => {
+    const room = io.sockets.adapter.rooms.get(roomCode);
+
+    if (room) {
+      socket.emit("roomError", "Room already exists");
+      return;
+    }
+    createEnemies(roomCode);
+
+    socket.join(roomCode);
+
+    players[socket.id] = {
+      id: socket.id,
+      roomCode,
+      respawnX: 3000,
+      respawnY: 150,
+      side: "left",
+      x: 180,
+      y: 1000,
+      health: 100,
+      shieldHealth: 100,
+      shielding: false,
+    };
+
+    socket.emit("roomCreated", roomCode);
+  });
+
   socket.on("zombie hit", ({ roomCode, enemyId }) => {
     const roomEnemies = enemies[roomCode];
 
@@ -717,72 +787,7 @@ io.on("connection", (socket) => {
   });
 
   /////////////////////////////////////////////////////////////////////////////////////////
-  socket.on("joinRoom", (roomCode) => {
-    const room = io.sockets.adapter.rooms.get(roomCode);
 
-    if (!room) {
-      socket.emit("roomError", "Room does not exist");
-      return;
-    }
-
-    if (room.size >= 2) {
-      socket.emit("roomError", "Room full");
-      return;
-    }
-
-    socket.join(roomCode);
-    gems[roomCode] = {
-      ownerId: null,
-      x: 500,
-      y: 300,
-    };
-
-    players[socket.id] = {
-      id: socket.id,
-      roomCode,
-      respawnX: 3000,
-      respawnY: 150,
-      x: 400,
-      y: 200,
-      health: 100,
-      shieldHealth: 100,
-      shielding: false,
-    };
-
-    socket.emit("roomJoined", roomCode);
-
-    const updatedRoom = io.sockets.adapter.rooms.get(roomCode);
-
-    if (updatedRoom.size === 2) {
-      io.to(roomCode).emit("startGame", roomCode);
-    }
-  });
-
-  socket.on("createRoom", (roomCode) => {
-    const room = io.sockets.adapter.rooms.get(roomCode);
-
-    if (room) {
-      socket.emit("roomError", "Room already exists");
-      return;
-    }
-    createEnemies(roomCode);
-
-    socket.join(roomCode);
-
-    players[socket.id] = {
-      id: socket.id,
-      roomCode,
-      respawnX: 200,
-      respawnY: 150,
-      x: 180,
-      y: 200,
-      health: 100,
-      shieldHealth: 100,
-      shielding: false,
-    };
-
-    socket.emit("roomCreated", roomCode);
-  });
   //////////////////////////////////////////////////
 });
 
