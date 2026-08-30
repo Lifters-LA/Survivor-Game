@@ -4,9 +4,10 @@ Survivor Game is a real-time multiplayer PvP game built with Phaser and Socket.I
 
 Two players join the same match, fight enemies, compete for the gem, and try to survive longer than their opponent.
 
+
 ## Live Demo
 
-[Play the Game]((https://jearonajaromal.itch.io/survivor))
+[Play the Game](https://jearonajaromal.itch.io/survivor)
 
 ## Features
 
